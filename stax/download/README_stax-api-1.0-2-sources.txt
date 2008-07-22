@@ -5,4 +5,4 @@ DOWNLOADABLE FROM:
 <https://sjsxp.dev.java.net/source/browse/*checkout*/sjsxp/repo/javax.xml.stream/java-sources/stax-api-1.0-2-sources.jar?rev=1.1.1.1> 
 
 USAGE IN OOo:
-The StAX API is used during build time for the saxon9 XSLT processor used for XSLT / XML based OOo filters.
+The StAX API is used ONLY during build time for the saxon9 XSLT processor used for XSLT / XML based OOo filters, for build environements NOT using OpenJDK 6 or higher.
