@@ -5,3 +5,4 @@ Added as JSR173 <http://www.jcp.org/en/jsr/detail?id=173> to OpenJDK 6 <http://d
 
 USAGE IN OOo:
 The StAX API is used ONLY during build time for the saxon9 XSLT processor used for XSLT / XML based OOo filters, for build environements NOT using OpenJDK 6 or higher.
+Of the dual licenses, the GPL 2 license is suited for OOo during build-time.
