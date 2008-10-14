@@ -1,7 +1,7 @@
 Please copy the source archive for the Mozilla sources into this directory.
-At the moment "mozilla-source-1.7.5.tar.gz" is required, it can be found
+At the moment "seamonkey-1.1.12-source.tar.gz" is required, it can be found
 here:
-  http://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.7.5/source/
+  http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/1.1.12/
 
 Windows builders need also
   "vc71-glib-1.2.10-bin.zip" and
