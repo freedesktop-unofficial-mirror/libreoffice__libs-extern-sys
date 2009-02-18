@@ -57,6 +57,12 @@ CONFIGURE_FLAGS= --disable-shared --with-pic
 CONFIGURE_FLAGS+= CFLAGS=-xc99=none
 .ENDIF                  # "$(COMNAME)"=="sunpro5"
 
+.IF "$(SYSBASE)"!=""
+.IF "$(EXTRA_CFLAGS)"!=""
+CONFIGURE_FLAGS+= CFLAGS="$(EXTRA_CFLAGS)" CXXFLAGS="$(EXTRA_CFLAGS)"
+.ENDIF # "$(SYSBASE)"!=""
+.ENDIF # "$(EXTRA_CFLAGS)"!=""
+
 BUILD_ACTION=make && make check
 
 OUT2LIB=$(BUILD_DIR)$/src$/hunspell$/.libs$/libhunspell-1.2.a
