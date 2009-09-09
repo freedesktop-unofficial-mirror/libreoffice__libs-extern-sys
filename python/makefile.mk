@@ -41,8 +41,8 @@ TARGET=so_python
 
 .IF "$(SYSTEM_PYTHON)" == "YES"
 all:
-    @echo "An already available installation of python should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of python should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 
@@ -95,6 +95,9 @@ BUILD_DIR=
 MYCWD=$(shell cygpath -m $(shell @pwd))/$(INPATH)/misc/build
 python_CFLAGS=-mno-cygwin -mthreads
 python_LDFLAGS=-mno-cygwin -mthreads
+.IF "$(MINGW_SHARED_GCCLIB)"=="YES"
+python_LDFLAGS+=-shared-libgcc
+.ENDIF
 CONFIGURE_ACTION=./configure --prefix=$(MYCWD)/python-inst --enable-shared CC="$(CC:s/guw.exe //)" CXX="$(CXX:s/guw.exe //)" MACHDEP=MINGW32 LN="cp -p" CFLAGS="$(python_CFLAGS)" LDFLAGS="$(python_LDFLAGS)"
 BUILD_ACTION=$(ENV_BUILD) make ; make install
 .ELSE
@@ -143,8 +146,8 @@ $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h : $(PACKAGE_DIR)$/$(CONFIGURE_FL
 $(PACKAGE_DIR)$/$(BUILD_FLAG_FILE) : $(PYCONFIG)
 
 $(PYCONFIG) : $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h
-    -rm -f $@
-    cat $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h > $@
+	-rm -f $@
+	cat $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h > $@
 .ENDIF
 .ENDIF
 
@@ -153,6 +156,6 @@ ALLTAR : $(PYVERSIONFILE)
 
 
 $(PYVERSIONFILE) : pyversion.mk $(PACKAGE_DIR)$/$(PREDELIVER_FLAG_FILE)
-    -rm -f $@
-    cat $? > $@
+	-rm -f $@
+	cat $? > $@
 
