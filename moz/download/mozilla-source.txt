@@ -1,7 +1,10 @@
 Please copy the source archive for the Mozilla sources into this directory.
-At the moment "seamonkey-1.1.12-source.tar.gz" is required, it can be found
+At the moment "seamonkey-1.1.14.source.tar.gz" is required, it can be found
 here:
- http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/1.1.13
+ ftp://ftp.mozilla.org/pub/mozilla.org/seamonkey/releases/1.1.14
+
+If this version is not available anymore, try a later 1.1.x release - chances
+are good it will work, too.
 
 Windows builders need also
   "vc8-moztools.zip"

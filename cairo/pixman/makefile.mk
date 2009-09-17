@@ -82,6 +82,11 @@ BUILD_ACTION=$(GNUMAKE) -f Makefile.win32
 CONFIGURE_DIR=
 CONFIGURE_ACTION=.$/configure
 CONFIGURE_FLAGS=--enable-static=yes --enable-shared=no
+.IF "$(SYSBASE)"!=""
+.IF "$(EXTRA_CFLAGS)"!=""
+CONFIGURE_FLAGS+=CFLAGS="$(EXTRA_CFLAGS) $(EXTRA_CDEFS)"
+.ENDIF # "$(EXTRA_CDEFS)"!=""
+.ENDIF # "$(SYSBASE)"!=""
 BUILD_ACTION=$(GNUMAKE)
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
@@ -135,7 +140,7 @@ BUILD_DIR=$(CONFIGURE_DIR)
 # -------- All platforms --------------------------------------------
 
 OUT2INC=pixman$/pixman-version.h  \
-    pixman$/pixman.h
+	pixman$/pixman.h
 
 .IF "$(OS)"=="MACOSX"
 OUT2LIB+=pixman$/.libs$/libpixman-1.a
