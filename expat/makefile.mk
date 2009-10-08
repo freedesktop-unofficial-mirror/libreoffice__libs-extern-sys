@@ -41,7 +41,7 @@ TARGET=so_expat
 .IF "$(SYSTEM_EXPAT)" == "YES"
 all:
         @echo "An already available installation of expat should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -49,7 +49,7 @@ all:
 TARFILE_NAME=expat
 ADDITIONAL_FILES=xmlparse$/makefile.mk xmltok$/makefile.mk makefile.mk
 
-PATCH_FILE_NAME=expat.patch
+PATCH_FILES=expat.patch
 
 CONFIGURE_DIR=
 CONFIGURE_ACTION=

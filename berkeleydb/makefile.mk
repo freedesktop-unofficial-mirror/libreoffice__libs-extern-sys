@@ -41,7 +41,7 @@ TARGET=so_berkeleydb
 .IF "$(SYSTEM_DB)" == "YES"
 all:
         @echo "An already available installation of db should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -50,21 +50,21 @@ TARFILE_NAME=db-4.2.52.NC-custom
 TARFILE_ROOTDIR=db-4.2.52.NC
 
 ADDITIONAL_FILES=    \
-    makefile.mk btree$/makefile.mk clib$/makefile.mk common$/makefile.mk  \
-    cxx$/makefile.mk db$/makefile.mk dbm$/makefile.mk dbreg$/makefile.mk  \
-    db_printlog$/makefile.mk env$/makefile.mk fileops$/makefile.mk hash$/makefile.mk  \
-    hmac$/makefile.mk hsearch$/makefile.mk lock$/makefile.mk  \
-    log$/makefile.mk mp$/makefile.mk mutex$/makefile.mk os$/makefile.mk  \
-    os_win32$/makefile.mk qam$/makefile.mk rep$/makefile.mk txn$/makefile.mk  \
-    xa$/makefile.mk libdb42.dxp db_4_2_gcc3.map
+	makefile.mk btree$/makefile.mk clib$/makefile.mk common$/makefile.mk  \
+	cxx$/makefile.mk db$/makefile.mk dbm$/makefile.mk dbreg$/makefile.mk  \
+	db_printlog$/makefile.mk env$/makefile.mk fileops$/makefile.mk hash$/makefile.mk  \
+	hmac$/makefile.mk hsearch$/makefile.mk lock$/makefile.mk  \
+	log$/makefile.mk mp$/makefile.mk mutex$/makefile.mk os$/makefile.mk  \
+	os_win32$/makefile.mk qam$/makefile.mk rep$/makefile.mk txn$/makefile.mk  \
+	xa$/makefile.mk libdb42.dxp db_4_2_gcc3.map
 
 
 
 # not needed for win32. comment out when causing problems...
 .IF "$(GUI)$(COM)"=="WNTGCC"
-PATCH_FILE_NAME=db-4.2.52-mingw.patch
+PATCH_FILES=db-4.2.52-mingw.patch
 .ELSE
-PATCH_FILE_NAME=db-4.2.52.patch
+PATCH_FILES=db-4.2.52.patch
 .ENDIF
 
 # clean compiler flags
@@ -98,7 +98,7 @@ LDFLAGS:=$(ARCH_FLAGS) -R\''$$$$ORIGIN'\'
 CONFIGURE_DIR=out
 #relative to CONFIGURE_DIR
 CONFIGURE_ACTION= \
-    ..$/dist$/configure
+	..$/dist$/configure
 CONFIGURE_FLAGS=--disable-cxx --enable-dynamic --enable-shared --enable-compat185
 
 # just pass ARCH_FLAGS to native build
@@ -117,7 +117,7 @@ BUILD_ACTION=make
 
 OUT2LIB=$(BUILD_DIR)$/.libs$/libdb*$(DLLPOST)
 OUT2INC= \
-    $(BUILD_DIR)$/db.h
+	$(BUILD_DIR)$/db.h
 
 .ENDIF			# "$(GUI)"=="UNX"
 
@@ -143,7 +143,7 @@ OUT2LIB=$(BUILD_DIR)$/.libs$/libdb*42.a
 OUT2BIN=$(BUILD_DIR)$/.libs$/libdb*42.dll
 
 OUT2INC= \
-    $(BUILD_DIR)$/db.h
+	$(BUILD_DIR)$/db.h
 .IF "$(GUI)$(COM)"=="WNTGCC"
 .EXPORT : PWD
 .ENDIF
@@ -165,7 +165,7 @@ BUILD_DIR_OUT=build_win32
 #	$(BUILD_DIR_OUT)$/Release$/libdb42.lib
 #OUT2BIN=$(BUILD_DIR_OUT)$/Release$/libdb42.dll
 OUT2INC= \
-    $(BUILD_DIR_OUT)$/db.h
+	$(BUILD_DIR_OUT)$/db.h
 .ENDIF
 .ENDIF			# "$(GUI)"=="WNT"
 

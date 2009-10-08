@@ -40,8 +40,8 @@ TARGET=so_libxml2
 
 .IF "$(SYSTEM_LIBXML)" == "YES"
 all:
-    @echo "An already available installation of libxml should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of libxml should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -50,9 +50,9 @@ LIBXML2VERSION=2.6.31
 
 TARFILE_NAME=$(PRJNAME)-$(LIBXML2VERSION)
 #.IF "$(OS)$(COM)"=="WNTGCC"
-#PATCH_FILE_NAME=$(TARFILE_NAME)-mingw.patch
+#PATCH_FILES=$(TARFILE_NAME)-mingw.patch
 #.ELSE
-PATCH_FILE_NAME=$(TARFILE_NAME).patch
+PATCH_FILES=$(TARFILE_NAME).patch
 #.ENDIF
 
 # This is only for UNX environment now

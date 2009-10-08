@@ -46,21 +46,21 @@ TARGET=ooo_boost
 # to workaround opt bug when compiling with -xO3
 .IF "$(SYSTEM_BOOST)" == "YES" && ("$(OS)"!="SOLARIS" || "$(COM)"=="GCC")
 all:
-    @echo "An already available installation of boost should exist on your system."        
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of boost should exist on your system."        
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ELSE			# "$(SYSTEM_BOOST)" == "YES" && ("$(OS)"!="SOLARIS" || "$(COM)"=="GCC")
 
 # --- Files --------------------------------------------------------
 
 TARFILE_NAME=boost-1.30.2
-PATCH_FILE_NAME=$(TARFILE_NAME).patch
+PATCH_FILES=$(TARFILE_NAME).patch
 
 .IF "$(COMID)"=="gcc3"
 
 # enabled for gcc4.x
 .IF "$(CCNUMVER)">="000400000000" 
   TARFILE_NAME=boost_1_34_1
-  PATCH_FILE_NAME=$(TARFILE_NAME).patch
+  PATCH_FILES=$(TARFILE_NAME).patch
 .ENDIF
 
 .ENDIF
