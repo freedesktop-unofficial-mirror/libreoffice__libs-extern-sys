@@ -41,8 +41,8 @@ TARGET=so_python
 
 .IF "$(SYSTEM_PYTHON)" == "YES"
 all:
-    @echo "An already available installation of python should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of python should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 
@@ -53,30 +53,30 @@ TARFILE_NAME=Python-$(PYVERSION)
 PATCH_FILE_NAME=Python-$(PYVERSION).patch
 
 PYPROJECTS= \
-    datetime 	\
-    mmap		\
-    parser		\
-    pyexpat		\
-    python 		\
-    pythonw		\
-    select		\
-    unicodedata	\
-    w9xpopen 	\
-    winreg		\
-    winsound	\
-    _socket		\
-    _csv		\
-    _sre	 	\
-    _symtable	\
-    _testcapi
+	datetime 	\
+	mmap		\
+	parser		\
+	pyexpat		\
+	python 		\
+	pythonw		\
+	select		\
+	unicodedata	\
+	w9xpopen 	\
+	winreg		\
+	winsound	\
+	_socket		\
+	_csv		\
+	_sre	 	\
+	_symtable	\
+	_testcapi
 
 PYADDITIONAL_PROJECTS = \
-    zlib 			\
-    make_versioninfo	\
-    bz2			\
-    _tkinter		\
-    _bsddb			\
-    pythoncore
+	zlib 			\
+	make_versioninfo	\
+	bz2			\
+	_tkinter		\
+	_bsddb			\
+	pythoncore
 
 ADDITIONAL_FILES_TMP=$(PYPROJECTS) $(PYADDITIONAL_PROJECTS)
 ADDITIONAL_FILES=$(foreach,i,$(ADDITIONAL_FILES_TMP) PCbuild/$(i).mak PCbuild/$(i).dep)
@@ -105,7 +105,7 @@ python_LDFLAGS+=-Wl,-z,noexecstack
 # SunStudio on Solaris 10 and above needs the -xc99=all flag already 
 # during the configuration tests, otherwise the HAVE_LIMITS_H check will
 # be wrong resulting in a build breaker.
-.IF "$(SYSBASE)"=="" || "$(OS)$(CPU)"=="SOLARISU"
+.IF "$(OS)"=="SOLARIS"
 .IF "$(COMNAME)"=="sunpro5"
 CC+:=-xc99=all
 .ENDIF          # "$(COMNAME)"=="sunpro5"
@@ -160,8 +160,8 @@ BUILD_DIR=PCbuild
 # solver during registration in insetoo_native
 BUILD_ACTION= \
     $(foreach,i,$(PYPROJECTS) nmake /f $(i).mak CFG="$(i) - Win32 Release" EXFLAGS=$(EXFLAGS) ADDITIONALLIBS=$(ADDITIONALLIBS) && ) \
-    python.exe -c "import os" && \
-    echo build done
+	python.exe -c "import os" && \
+	echo build done
 .ENDIF
 .ENDIF
 
@@ -183,8 +183,8 @@ $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h : $(PACKAGE_DIR)$/$(CONFIGURE_FL
 $(PACKAGE_DIR)$/$(BUILD_FLAG_FILE) : $(PYCONFIG)
 
 $(PYCONFIG) : $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h
-    -rm -f $@
-    cat $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h > $@
+	-rm -f $@
+	cat $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h > $@
 .ENDIF
 .ENDIF
 
@@ -193,6 +193,6 @@ ALLTAR : $(PYVERSIONFILE)
 
 
 $(PYVERSIONFILE) : pyversion.mk $(PACKAGE_DIR)$/$(PREDELIVER_FLAG_FILE)
-    -rm -f $@
-    cat $? > $@
+	-rm -f $@
+	cat $? > $@
 
