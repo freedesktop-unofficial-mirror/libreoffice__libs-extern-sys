@@ -84,27 +84,27 @@ ADDITIONAL_FILES=mailnews$/addrbook$/src$/nsAbMD5sum.cpp
 
 CONFIGURE_DIR=
 MOZILLA_CONFIGURE_FLAGS= $(SYSBASE_X11) --disable-tests \
-                --enable-ldap \
-                --enable-crypto \
-                --enable-optimize \
-                --enable-strip \
-                --disable-profilelocking \
-                --disable-activex \
-                --disable-activex-scripting \
-                --disable-gnomevfs \
-                --disable-debug \
-                --disable-xprint \
-                --disable-postscript \
-                --disable-freetype2 \
-                --without-system-zlib \
-                --disable-installer \
-                --disable-accessibility \
-                --disable-xpfe-components \
-                --disable-mathml \
-                --disable-oji \
-                --disable-profilesharing \
-                --disable-boehm \
-                --disable-jsloader
+				--enable-ldap \
+				--enable-crypto \
+				--enable-optimize \
+				--enable-strip \
+				--disable-profilelocking \
+				--disable-activex \
+				--disable-activex-scripting \
+				--disable-gnomevfs \
+				--disable-debug \
+				--disable-xprint \
+				--disable-postscript \
+				--disable-freetype2 \
+				--without-system-zlib \
+				--disable-installer \
+				--disable-accessibility \
+				--disable-xpfe-components \
+				--disable-mathml \
+				--disable-oji \
+				--disable-profilesharing \
+				--disable-boehm \
+				--disable-jsloader
 
 #disable profilelocking to share profile with mozilla
 #disable activex and activex-scripting to remove the dependence of Microsoft_SDK\src\mfc\atlbase.h
@@ -219,7 +219,7 @@ LIBIDL_PREFIX:=$(MOZ_TOOLS)/vc71
 
 .IF "$(BUILD_MOZAB)"==""
 all:
-    @echo "Never Build Mozilla."
+	@echo "Never Build Mozilla."
 .ENDIF	
 
 .INCLUDE : set_ext.mk
@@ -231,8 +231,8 @@ NEEDWINTOOLSFLAGFILE:=$(MISC)$/build$/wintools.complete
 .ENDIF # "$(GUI)"=="WNT"
 
 ALLTAR: $(NEEDWINTOOLSFLAGFILE) \
-    $(MISC)$/remove_build.flag \
-    extract_mozab_files
+	$(MISC)$/remove_build.flag \
+	extract_mozab_files
 
 $(PACKAGE_DIR)$/$(UNTAR_FLAG_FILE) : $(MISC)$/remove_build.flag
 
@@ -240,37 +240,37 @@ $(PACKAGE_DIR)$/$(UNTAR_FLAG_FILE) : $(MISC)$/remove_build.flag
 # patch at configure level), we remove the entire package directory if a patch
 # is newer.
 $(MISC)$/remove_build.flag : $(PATCH_FILE_NAME)
-    $(REMOVE_PACKAGE_COMMAND)
-    $(TOUCH) $(MISC)$/remove_build.flag
+	$(REMOVE_PACKAGE_COMMAND)
+	$(TOUCH) $(MISC)$/remove_build.flag
 
 # Unpack/setup Windows build tools
 .IF "$(GUI)"=="WNT"
 $(PACKAGE_DIR)$/$(UNTAR_FLAG_FILE) : $(MISC)$/build$/wintools.complete
 
 $(MISC)$/build$/wintools.unpack : $(PRJ)$/download$/$(WINTOOLS_ZIPFILE_NAME)
-    -$(RENAME) $(MOZTOOLSUNPACK) $(MOZTOOLSUNPACK)_removeme
-    -$(RENAME) $(MOZTOOLSINST) $(MOZTOOLSINST)_removeme
-    -rm -rf $(MOZTOOLSUNPACK)_removeme $(MOZTOOLSINST)_removeme
-    @-$(MKDIRHIER) $(MOZTOOLSUNPACK)
-    unzip $(PRJ)$/download$/$(WINTOOLS_ZIPFILE_NAME) -d $(MOZTOOLSUNPACK)
-    $(TOUCH) $(MISC)$/build$/wintools.unpack
+	-$(RENAME) $(MOZTOOLSUNPACK) $(MOZTOOLSUNPACK)_removeme
+	-$(RENAME) $(MOZTOOLSINST) $(MOZTOOLSINST)_removeme
+	-rm -rf $(MOZTOOLSUNPACK)_removeme $(MOZTOOLSINST)_removeme
+	@-$(MKDIRHIER) $(MOZTOOLSUNPACK)
+	unzip $(PRJ)$/download$/$(WINTOOLS_ZIPFILE_NAME) -d $(MOZTOOLSUNPACK)
+	$(TOUCH) $(MISC)$/build$/wintools.unpack
 
 $(MISC)$/build$/wintools.install : $(MISC)$/build$/wintools.unpack
-    cd $(MOZTOOLSUNPACK)$/buildtools$/windows && $(SET_MOZ_TOOLS_INSTALL_BAT) && cmd /c install.bat
-    $(TOUCH) $(MISC)$/build$/wintools.install
+	cd $(MOZTOOLSUNPACK)$/buildtools$/windows && $(SET_MOZ_TOOLS_INSTALL_BAT) && cmd /c install.bat
+	$(TOUCH) $(MISC)$/build$/wintools.install
 
 $(MISC)$/build$/wintools.complete : \
   $(MISC)$/build$/wintools.install \
   $(PRJ)$/download$/$(LIBIDL_VC71_ZIPFILE_NAME) \
   $(PRJ)$/download$/$(LIBGLIB_VC71_ZIPFILE_NAME)
-    unzip $(PRJ)$/download$/$(LIBIDL_VC71_ZIPFILE_NAME) -d $(MOZTOOLSINST)
-    unzip $(PRJ)$/download$/$(LIBGLIB_VC71_ZIPFILE_NAME) -d $(MOZTOOLSINST)
+	unzip $(PRJ)$/download$/$(LIBIDL_VC71_ZIPFILE_NAME) -d $(MOZTOOLSINST)
+	unzip $(PRJ)$/download$/$(LIBGLIB_VC71_ZIPFILE_NAME) -d $(MOZTOOLSINST)
 # chmod is also needed for W32-4nt build (when cygwin unzip is used)
-    -chmod -R +x $(MOZTOOLSINST)$/vc71$/bin
-    $(TOUCH) $(MISC)$/build$/wintools.complete
+	-chmod -R +x $(MOZTOOLSINST)$/vc71$/bin
+	$(TOUCH) $(MISC)$/build$/wintools.complete
 .ENDIF # "$(GUI)"=="WNT"
 
 zip:	\
-    $(MISC)$/CREATETARBALL
+	$(MISC)$/CREATETARBALL
 
 .INCLUDE : extractfiles.mk

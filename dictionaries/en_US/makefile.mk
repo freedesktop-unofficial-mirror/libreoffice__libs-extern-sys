@@ -8,7 +8,7 @@
 #
 # $RCSfile: makefile.mk,v $
 #
-# $Revision: 1.22 $
+# $Revision: 1.22.8.1 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -32,7 +32,7 @@
 PRJ=..
 
 PRJNAME=dictionaries
-TARGET=dict-en
+TARGET=dict-en-us
 
 # --- Settings -----------------------------------------------------
 
@@ -81,10 +81,10 @@ EXTENSION_PACKDEPS=$(COMPONENT_FILES) $(COMPONENT_UNZIP_FILES) $(EXTENSIONDIR)$/
 
 .IF "$(COMPONENT_UNZIP_FILES)"!=""
 $(COMPONENT_UNZIP_FILES) : "$(COMPONENT_ZIP)"
-    @@-$(MKDIRHIER) $(@:d)
-    cd $(EXTENSIONDIR) && unzip -o $< $(subst,$(EXTENSIONDIR)$/, $@)
+	@@-$(MKDIRHIER) $(@:d)
+	cd $(EXTENSIONDIR) && unzip -o $< $(subst,$(EXTENSIONDIR)$/, $@)
 .ENDIF			# "$(COMPONENT_UNZIP_FILES)"!=""
 
 $(EXTENSIONDIR)$/th_en_US_v2.idx : "$(EXTENSIONDIR)$/th_en_US_v2.dat"
-    @@-$(MKDIRHIER) $(@:d)
-    $(PERL) $(PRJ)$/util$/th_gen_idx.pl -o $(EXTENSIONDIR)$/th_en_US_v2.idx <$(EXTENSIONDIR)$/th_en_US_v2.dat
+	@@-$(MKDIRHIER) $(@:d)
+	$(PERL) $(PRJ)$/util$/th_gen_idx.pl -o $(EXTENSIONDIR)$/th_en_US_v2.idx <$(EXTENSIONDIR)$/th_en_US_v2.dat

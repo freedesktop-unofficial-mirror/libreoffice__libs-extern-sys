@@ -8,7 +8,7 @@
 #
 # $RCSfile: makefile.mk,v $
 #
-# $Revision: 1.4 $
+# $Revision: 1.1.2.4 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -44,7 +44,7 @@ all:
 
 .ELIF "$(SYSTEM_CAIRO)" == "YES"
 all:
-    @echo "Nothing to do, using system cairo."
+	@echo "Nothing to do, using system cairo."
 
 .ELIF "$(BUILD_CAIRO)" == ""
 all:
@@ -57,7 +57,7 @@ all:
 CAIROVERSION=1.6.4
 
 TARFILE_NAME=$(PRJNAME)-$(CAIROVERSION)
-#PATCH_FILE_NAME=$(TARFILE_NAME).patch
+PATCH_FILE_NAME=..$/$(TARFILE_NAME).patch
 
 cairo_CFLAGS=-I$(SOLARINC)
 cairo_LDFLAGS=-L$(SOLARLIB)
@@ -66,12 +66,23 @@ cairo_LDFLAGS=-L$(SOLARLIB)
 pixman_CFLAGS=-I$(SRC_ROOT)$/$(PRJNAME)$/$(INPATH)$/inc
 pixman_LIBS=-L$(SRC_ROOT)$/$(PRJNAME)$/$(INPATH)$/lib -lpixman-1
 
+cairo_CPPFLAGS=
+.IF "$(SYSTEM_ZLIB)"!="YES"
+cairo_CPPFLAGS+=-I$(SOLARINCDIR)$/external$/zlib
+cairo_COMPRESS=z_compress
+.ELSE
+cairo_COMPRESS=compress
+.ENDIF
+cairo_CPPFLAGS+=$(INCLUDE)
+
 .IF "$(OS)"=="WNT"
 # --------- Windows -------------------------------------------------
 .IF "$(COM)"=="GCC"
+cairo_CPPFLAGS+=-nostdinc
+
 CONFIGURE_DIR=
-CONFIGURE_ACTION=.$/configure
-CONFIGURE_FLAGS=--enable-static=no --build=i586-pc-mingw32 --host=i586-pc-mingw32 CFLAGS="$(cairo_CFLAGS) -D_MT" LDFLAGS="$(cairo_LDFLAGS) pixman_CFLAGS="$(pixman_CFLAGS)" pixman_LIBS="$(pixman_LIBS)" -no-undefined -L$(ILIB:s/;/ -L/)" LIBS="-lmingwthrd" ZLIB3RDLIB=$(ZLIB3RDLIB) OBJDUMP="$(WRAPCMD) objdump"
+CONFIGURE_ACTION=cp $(SRC_ROOT)$/$(PRJNAME)$/cairo$/dummy_pkg_config . && .$/configure
+CONFIGURE_FLAGS=--disable-xlib --disable-freetype --disable-pthread --disable-svg --disable-png --enable-gtk-doc=no --enable-test-surfaces=no --enable-static=no --build=i586-pc-mingw32 --host=i586-pc-mingw32 PKG_CONFIG=./dummy_pkg_config CFLAGS=-D_MT CPPFLAGS="$(cairo_CPPFLAGS)" LDFLAGS="$(cairo_LDFLAGS) -no-undefined -L$(ILIB:s/;/ -L/)" LIBS=-lmingwthrd pixman_CFLAGS="$(pixman_CFLAGS)" pixman_LIBS="$(pixman_LIBS)" ZLIB3RDLIB=$(ZLIB3RDLIB) COMPRESS=$(cairo_COMPRESS) OBJDUMP="$(WRAPCMD) objdump"
 BUILD_ACTION=$(GNUMAKE)
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
@@ -95,7 +106,7 @@ OUT2INC+=src$/cairo-win32.h
 # ----------- Native Mac OS X (Aqua/Quartz) --------------------------------
 CONFIGURE_DIR=
 CONFIGURE_ACTION=cp $(SRC_ROOT)$/$(PRJNAME)$/cairo$/dummy_pkg_config . && .$/configure
-CONFIGURE_FLAGS=--enable-static=no --disable-xlib --disable-freetype --disable-svg --disable-png --enable-quartz --enable-quartz-font --enable-gtk-doc=no --enable-test-surfaces=no PKG_CONFIG=./dummy_pkg_config CFLAGS="$(cairo_CFLAGS)" LDFLAGS="$(cairo_LDFLAGS)" pixman_CFLAGS="$(pixman_CFLAGS)" pixman_LIBS="$(pixman_LIBS)" ZLIB3RDLIB=$(ZLIB3RDLIB)
+CONFIGURE_FLAGS=--enable-static=no --disable-xlib --disable-freetype --disable-svg --disable-png --enable-quartz --enable-quartz-font --enable-gtk-doc=no --enable-test-surfaces=no PKG_CONFIG=./dummy_pkg_config CFLAGS="$(cairo_CFLAGS)" CPPFLAGS="$(cairo_CPPFLAGS)" LDFLAGS="$(cairo_LDFLAGS)" pixman_CFLAGS="$(pixman_CFLAGS)" pixman_LIBS="$(pixman_LIBS)" ZLIB3RDLIB=$(ZLIB3RDLIB) COMPRESS=$(cairo_COMPRESS)
 BUILD_ACTION=$(GNUMAKE)
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
@@ -127,7 +138,7 @@ cairo_CFLAGS+=-xc99=none
 
 CONFIGURE_DIR=
 CONFIGURE_ACTION=.$/configure
-CONFIGURE_FLAGS=--enable-xlib --enable-freetype --disable-svg --disable-png --enable-gtk-doc=no --enable-test-surfaces=no --enable-static=no CFLAGS="$(cairo_CFLAGS)" LDFLAGS="$(cairo_LDFLAGS)" pixman_CFLAGS="$(pixman_CFLAGS)" pixman_LIBS="$(pixman_LIBS)" ZLIB3RDLIB=$(ZLIB3RDLIB)
+CONFIGURE_FLAGS=--enable-xlib --enable-freetype --disable-svg --disable-png --enable-gtk-doc=no --enable-test-surfaces=no --enable-static=no CFLAGS="$(cairo_CFLAGS)" CPPFLAGS="$(cairo_CPPFLAGS)" LDFLAGS="$(cairo_LDFLAGS)" pixman_CFLAGS="$(pixman_CFLAGS)" pixman_LIBS="$(pixman_LIBS)" ZLIB3RDLIB=$(ZLIB3RDLIB) COMPRESS=$(cairo_COMPRESS)
 .IF "$(OS)"=="MACOSX"      # X11 on Mac OS X
 CONFIGURE_ACTION=cp $(SRC_ROOT)$/$(PRJNAME)$/cairo$/dummy_pkg_config . && .$/configure
 CONFIGURE_FLAGS+=--disable-quartz --disable-quartz-font PKG_CONFIG=./dummy_pkg_config
@@ -137,7 +148,7 @@ BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
 
 OUT2INC+=src$/cairo-xlib.h \
-     src$/cairo-xlib-xrender.h
+	 src$/cairo-xlib-xrender.h
 
 .ENDIF
 
@@ -148,10 +159,10 @@ OUT2INC+=src$/cairo-xlib.h \
 
 
 OUT2INC+=src$/cairo-deprecated.h \
-     src$/cairo-features.h  \
-     src$/cairo-pdf.h	\
-     src$/cairo-ps.h	\
-     src$/cairo.h
+	 src$/cairo-features.h  \
+	 src$/cairo-pdf.h	\
+	 src$/cairo-ps.h	\
+	 src$/cairo.h
 
 .IF "$(OS)"=="MACOSX"
 OUT2LIB+=src$/.libs$/libcairo*.dylib

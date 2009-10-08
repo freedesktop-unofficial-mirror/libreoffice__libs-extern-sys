@@ -8,7 +8,7 @@
 #
 # $RCSfile: makefile.mk,v $
 #
-# $Revision: 1.10 $
+# $Revision: 1.10.8.1 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -32,7 +32,7 @@
 PRJ=..
 
 PRJNAME=dictionaries
-TARGET=dict-de
+TARGET=dict-de-ch
 
 # --- Settings -----------------------------------------------------
 
@@ -54,14 +54,10 @@ COMPONENT_COPYONLY=TRUE
 
 # just copy:
 COMPONENT_FILES= \
-    $(EXTENSIONDIR)$/COPYING \
     $(EXTENSIONDIR)$/COPYING_OASIS \
-    $(EXTENSIONDIR)$/Copyright \
     $(EXTENSIONDIR)$/de_CH.aff \
     $(EXTENSIONDIR)$/de_CH.dic \
-    $(EXTENSIONDIR)$/INSTALL_de.txt \
-    $(EXTENSIONDIR)$/README_de_CH.txt \
-    $(EXTENSIONDIR)$/VERSION
+    $(EXTENSIONDIR)$/README_de_CH.txt
 
 # disable fetching default OOo license text
 # CUSTOM_LICENSE=Copyright
@@ -87,6 +83,6 @@ EXTENSION_PACKDEPS=$(COMPONENT_FILES) $(COMPONENT_UNZIP_FILES)
 
 .IF "$(COMPONENT_UNZIP_FILES)"!=""
 $(COMPONENT_UNZIP_FILES) : "$(COMPONENT_ZIP)"
-    @@-$(MKDIRHIER) $(@:d)
-    cd $(EXTENSIONDIR) && unzip -o $< $(subst,$(EXTENSIONDIR)$/, $@)
+	@@-$(MKDIRHIER) $(@:d)
+	cd $(EXTENSIONDIR) && unzip -o $< $(subst,$(EXTENSIONDIR)$/, $@)
 .ENDIF			# "$(COMPONENT_UNZIP_FILES)"!=""

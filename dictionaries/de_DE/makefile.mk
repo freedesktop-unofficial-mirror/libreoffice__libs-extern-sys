@@ -8,7 +8,7 @@
 #
 # $RCSfile: makefile.mk,v $
 #
-# $Revision: 1.15 $
+# $Revision: 1.15.2.1 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -32,7 +32,7 @@
 PRJ=..
 
 PRJNAME=dictionaries
-TARGET=dict-de
+TARGET=dict-de-de
 
 # --- Settings -----------------------------------------------------
 
@@ -91,5 +91,5 @@ EXTENSION_PACKDEPS=$(COMPONENT_UNZIP_FILES) $(COMPONENT_FILES)
 
 .IF "$(COMPONENT_UNZIP_FILES)"!=""
 $(COMPONENT_UNZIP_FILES) : "$(COMPONENT_ZIP)"
-    cd $(EXTENSIONDIR) && unzip -o $< $(subst,$(EXTENSIONDIR)$/, $@)
+	cd $(EXTENSIONDIR) && unzip -o $< $(subst,$(EXTENSIONDIR)$/, $@)
 .ENDIF			# "$(COMPONENT_UNZIP_FILES)"!=""
