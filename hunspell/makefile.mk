@@ -62,8 +62,10 @@ CONFIGURE_FLAGS+= CFLAGS=-xc99=none
 .IF "$(SYSBASE)"!=""
 .IF "$(EXTRA_CFLAGS)"!=""
 CONFIGURE_FLAGS+= CFLAGS="$(EXTRA_CFLAGS)" CXXFLAGS="$(EXTRA_CFLAGS)"
-.ENDIF # "$(SYSBASE)"!=""
 .ENDIF # "$(EXTRA_CFLAGS)"!=""
+.ELIF "$(OS)"=="MACOSX" # "$(SYSBASE)"!=""
+CONFIGURE_FLAGS+=CPPFLAGS="$(EXTRA_CDEFS)"
+.ENDIF
 
 BUILD_ACTION=make && make check
 
@@ -88,7 +90,7 @@ BUILD_ACTION=cd src/hunspell && dmake
 .ENDIF # "$(GUI)"=="OS2"
 
 OUT2INC= \
-    $(BUILD_DIR)$/src$/hunspell$/*.hxx
+	$(BUILD_DIR)$/src$/hunspell$/*.hxx
 
 # --- Targets ------------------------------------------------------
 
