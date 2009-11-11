@@ -42,12 +42,12 @@ TARGET=nss
 
 .IF "$(ENABLE_NSS_MODULE)"!="YES"
 all:
-    @echo "NSS will not be built. ENABLE_NSS_MODULE is '$(ENABLE_NSS_MODULE)'"
+	@echo "NSS will not be built. ENABLE_NSS_MODULE is '$(ENABLE_NSS_MODULE)'"
 .ENDIF	
 
-TARFILE_NAME=nss_3_12_3
+TARFILE_NAME=nss_3_12_4
 TARFILE_ROOTDIR=mozilla
-PATCH_FILES=nss_3_12_3.patch
+PATCH_FILES=nss.patch
 
 .IF "$(debug)" != ""
 .ELSE
@@ -58,9 +58,6 @@ BUILD_OPT=1
 
 .IF "$(GUI)"=="UNX"
 .IF "$(OS)$(COM)"=="LINUXGCC"
-#LDFLAGS:=-Wl,-rpath,'$$$$ORIGIN'
-.EXPORT: LDFLAGS
-
 .IF "$(CPU)"=="X"
 # force 64-bit buildmode
 USE_64:=1
@@ -90,7 +87,7 @@ BUILD_ACTION= $(GNUMAKE) nss_build_all
 
 .IF "$(COM)"=="GCC"
 
-PATCH_FILES+=nss_3_12_3.patch.mingw
+PATCH_FILES+=nss.patch.mingw
 
 moz_build:=$(shell cygpath -p $(MOZILLABUILD))
 PATH!:=$(moz_build)/bin:$(PATH)
@@ -112,16 +109,16 @@ BUILD_DIR=security$/nss
 BUILD_ACTION=NS_USE_GCC=1 CC="$(nss_CC)" CXX="$(nss_CXX)" OS_LIBS="$(nss_LIBS)" OS_TARGET=WIN95 _WIN32_IE=0x500 PATH="$(PATH)" DEFINES=-D_WIN32_IE=0x500 $(GNUMAKE) nss_build_all
 
 OUT2LIB= \
-    dist$/out$/lib$/libnspr4.a \
-    dist$/out$/lib$/libnss3.a \
-    dist$/out$/lib$/libnssdbm3.a \
-    dist$/out$/lib$/libnssutil3.a \
-    dist$/out$/lib$/libplc4.a \
-    dist$/out$/lib$/libplds4.a \
-    dist$/out$/lib$/libsmime3.a \
-    dist$/out$/lib$/libsoftokn3.a \
-    dist$/out$/lib$/libsqlite3.a \
-    dist$/out$/lib$/libssl3.a
+	dist$/out$/lib$/libnspr4.a \
+	dist$/out$/lib$/libnss3.a \
+	dist$/out$/lib$/libnssdbm3.a \
+	dist$/out$/lib$/libnssutil3.a \
+	dist$/out$/lib$/libplc4.a \
+	dist$/out$/lib$/libplds4.a \
+	dist$/out$/lib$/libsmime3.a \
+	dist$/out$/lib$/libsoftokn3.a \
+	dist$/out$/lib$/libsqlite3.a \
+	dist$/out$/lib$/libssl3.a
 
 .ELSE			# "$(COM)"=="GCC"
 MOZ_MSVCVERSION= 9
@@ -148,19 +145,19 @@ EXT_USE_STLPORT=TRUE
 #mozilla/security/nss
 NSS_BUILD_DIR= $(subst,\,/ $(PWD)/$(MISC)/build/mozilla/security/nss)
 BUILD_ACTION= $(subst,/,$/ $(MOZILLABUILD)/msys/bin/bash) -i \
-    -c "cd $(NSS_BUILD_DIR) && make nss_build_all"
+	-c "cd $(NSS_BUILD_DIR) && make nss_build_all"
 
 OUT2LIB= \
-     dist$/out$/lib$/nspr4.lib \
-     dist$/out$/lib$/nss3.lib \
-     dist$/out$/lib$/nssdbm3.lib \
-     dist$/out$/lib$/nssutil3.lib \
-     dist$/out$/lib$/plc4.lib \
-     dist$/out$/lib$/plds4.lib \
-     dist$/out$/lib$/smime3.lib \
-     dist$/out$/lib$/softokn3.lib \
-     dist$/out$/lib$/sqlite3.lib \
-     dist$/out$/lib$/ssl3.lib
+ 	dist$/out$/lib$/nspr4.lib \
+ 	dist$/out$/lib$/nss3.lib \
+ 	dist$/out$/lib$/nssdbm3.lib \
+ 	dist$/out$/lib$/nssutil3.lib \
+ 	dist$/out$/lib$/plc4.lib \
+ 	dist$/out$/lib$/plds4.lib \
+ 	dist$/out$/lib$/smime3.lib \
+ 	dist$/out$/lib$/softokn3.lib \
+ 	dist$/out$/lib$/sqlite3.lib \
+ 	dist$/out$/lib$/ssl3.lib
 
 .ENDIF			# "$(COM)"=="GCC"
 
