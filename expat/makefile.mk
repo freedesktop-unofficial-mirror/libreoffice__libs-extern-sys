@@ -41,20 +41,23 @@ TARGET=so_expat
 .IF "$(SYSTEM_EXPAT)" == "YES"
 all:
         @echo "An already available installation of expat should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
 
-TARFILE_NAME=expat
-ADDITIONAL_FILES=xmlparse$/makefile.mk xmltok$/makefile.mk makefile.mk
-
-PATCH_FILES=expat.patch
+TARFILE_NAME=expat-2.0.1
+ADDITIONAL_FILES=lib$/makefile.mk
+PATCH_FILES=expat-2.0.1.patch
 
 CONFIGURE_DIR=
+.IF "$(OS)"=="WNT"
 CONFIGURE_ACTION=
+.ELSE
+CONFIGURE_ACTION=.$/configure
+.ENDIF
 
-BUILD_DIR=
+BUILD_DIR=lib
 BUILD_ACTION=dmake $(MFLAGS) $(CALLMACROS)
 
 # --- Targets ------------------------------------------------------
@@ -62,4 +65,3 @@ BUILD_ACTION=dmake $(MFLAGS) $(CALLMACROS)
 .INCLUDE : set_ext.mk
 .INCLUDE : target.mk
 .INCLUDE : tg_ext.mk
-
