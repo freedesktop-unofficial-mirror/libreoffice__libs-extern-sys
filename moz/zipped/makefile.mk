@@ -43,57 +43,57 @@ TARGET=moz_unzip
 .IF "$(PREBUILD_MOZAB)" == "" || "$(SYSTEM_MOZILLA)" == "YES" || "$(WITH_MOZILLA)" == "NO"
 
 dummy:
-    @echo "No need to unpack the prebuild mozab packages"
+	@echo "No need to unpack the prebuild mozab packages"
 
 .ELSE # unpack mozab zips
 .INCLUDE :  target.mk
 
 .IF "$(BUILD_MOZAB)"=="TRUE"
 ALLTAR:
-    @echo "Does not need build mozab zipped!"
+	@echo "Does not need build mozab zipped!"
 .ELSE
 ALLTAR: \
-    $(MISC)$/unpacked_$(TARGET)_inc \
-    $(MISC)$/unpacked_$(TARGET)_lib \
-    $(BIN)$/mozruntime.zip \
-    $(MISC)$/replace_old_nss_libs
+	$(MISC)$/unpacked_$(TARGET)_inc \
+	$(MISC)$/unpacked_$(TARGET)_lib \
+	$(BIN)$/mozruntime.zip \
+	$(MISC)$/replace_old_nss_libs
 .ENDIF
 .IF "$(GUI)" == "UNX"
 
 $(MISC)$/unpacked_%_lib : $(OS)$(COM)$(CPU)lib.zip '$(OS)$(COM)$(CPU)runtime.zip'
-    unzip -o -d $(LB) $(OS)$(COM)$(CPU)lib.zip && unzip -o -d $(LB) $(OS)$(COM)$(CPU)runtime.zip && $(TOUCH) $@
-    chmod -R 775 $(LB)
+	unzip -o -d $(LB) $(OS)$(COM)$(CPU)lib.zip && unzip -o -d $(LB) $(OS)$(COM)$(CPU)runtime.zip && $(TOUCH) $@
+	chmod -R 775 $(LB)
 
 $(MISC)$/unpacked_%_inc : $(OS)$(COM)$(CPU)inc.zip
-    unzip -o -d $(INCCOM) $(OS)$(COM)$(CPU)inc.zip && $(TOUCH)	$@
-    chmod -R 775 $(INCCOM)
+	unzip -o -d $(INCCOM) $(OS)$(COM)$(CPU)inc.zip && $(TOUCH)	$@
+	chmod -R 775 $(INCCOM)
 
 .ELSE
 
 $(MISC)$/unpacked_$(TARGET)_lib : $(OS)$(COM)$(CPU)lib.zip
-    unzip -o -d $(LB) $(OS)$(COM)$(CPU)lib.zip && \
-    $(TOUCH) $@
+	unzip -o -d $(LB) $(OS)$(COM)$(CPU)lib.zip && \
+	$(TOUCH) $@
 
 $(MISC)$/unpacked_$(TARGET)_inc : $(OS)$(COM)$(CPU)inc.zip
-    unzip -o -d $(INCCOM) $(OS)$(COM)$(CPU)inc.zip && $(TOUCH)	$@
+	unzip -o -d $(INCCOM) $(OS)$(COM)$(CPU)inc.zip && $(TOUCH)	$@
 
 .ENDIF
 
 $(BIN)$/mozruntime%zip : $(OS)$(COM)$(CPU)runtime.zip
-    $(COPY) $(OS)$(COM)$(CPU)runtime.zip $(BIN)$/mozruntime.zip
+	$(COPY) $(OS)$(COM)$(CPU)runtime.zip $(BIN)$/mozruntime.zip
 
 # add alternative rules for universal binary moz-zips
 .IF "$(GUIBASE)" == "aqua"
 $(MISC)$/unpacked_%_lib : $(OS)$(COM)UBlib.zip '$(OS)$(COM)UBruntime.zip'
-    unzip -o -d $(LB) $(OS)$(COM)UBlib.zip && unzip -o -d $(LB) $(OS)$(COM)UBruntime.zip && $(TOUCH) $@
-    chmod -R 775 $(LB)
+	unzip -o -d $(LB) $(OS)$(COM)UBlib.zip && unzip -o -d $(LB) $(OS)$(COM)UBruntime.zip && $(TOUCH) $@
+	chmod -R 775 $(LB)
   
 $(MISC)$/unpacked_%_inc : $(OS)$(COM)UBinc.zip
-    unzip -o -d $(INCCOM) $(OS)$(COM)UBinc.zip && $(TOUCH)	$@
-    chmod -R 775 $(INCCOM)
+	unzip -o -d $(INCCOM) $(OS)$(COM)UBinc.zip && $(TOUCH)	$@
+	chmod -R 775 $(INCCOM)
 
 $(BIN)$/mozruntime%zip : $(OS)$(COM)UBruntime.zip
-    $(COPY) $(OS)$(COM)UBruntime.zip $(BIN)$/mozruntime.zip
+	$(COPY) $(OS)$(COM)UBruntime.zip $(BIN)$/mozruntime.zip
 
 .ENDIF # "$(GUIBASE)"=="aqua"
 
@@ -175,6 +175,8 @@ FREEBL=freebl3
 .ENDIF # "$(OS)" == "SOLARIS" 
 
 
+#On Linux/Unix sqlite is delivered to $(SOLARLIBDIR)/sqlite/libsqlite3.so
+#See readme.txt  in module nss
 NSS_MODULE_RUNTIME_LIST:= \
     $(FREEBL) \
     nspr4 \
@@ -186,7 +188,7 @@ NSS_MODULE_RUNTIME_LIST:= \
     plds4 \
     smime3 \
     softokn3 \
-    sqlite3 \
+    sqlite/sqlite3 \
     ssl3
 
 
@@ -200,13 +202,13 @@ $(MISC)$/unpacked_$(TARGET)_inc $(BIN)$/mozruntime.zip
         echo >& $(NULLDEV)
     $(foreach,lib,$(LIBLIST) rm -f $(LB)$/$(lib) &&) \
     echo >& $(NULLDEV)
-    $(foreach,lib,$(BIN_RUNTIMELIST) zip -d $(BIN)$/mozruntime.zip $(DLLPRE)$(lib)$(DLLPOST) &&) \
+    $(foreach,lib,$(BIN_RUNTIMELIST) zip -d $(BIN)$/mozruntime.zip $(DLLPRE)$(lib:f)$(DLLPOST) &&) \
     echo >& $(NULLDEV)
 .IF "$(GUI)"=="WNT"
-    $(foreach,lib,$(NSS_MODULE_RUNTIME_LIST) zip -g -j $(BIN)$/mozruntime.zip $(SOLARBINDIR)$/$(DLLPRE)$(lib)$(DLLPOST) &&) \
+    +$(foreach,lib,$(NSS_MODULE_RUNTIME_LIST) zip -g -j $(BIN)$/mozruntime.zip $(SOLARBINDIR)$/$(DLLPRE)$(lib:f)$(DLLPOST) &&) \
     echo >& $(NULLDEV)
 .ELSE
-    $(foreach,lib,$(NSS_MODULE_RUNTIME_LIST) zip -g -j $(BIN)$/mozruntime.zip $(SOLARLIBDIR)$/$(DLLPRE)$(lib)$(DLLPOST) &&) \
+    +$(foreach,lib,$(NSS_MODULE_RUNTIME_LIST) zip -g -j $(BIN)$/mozruntime.zip $(SOLARLIBDIR)$/$(lib:d)$(DLLPRE)$(lib:f)$(DLLPOST) &&) \
     echo >& $(NULLDEV)
 .ENDIF
     $(TOUCH) $@     
