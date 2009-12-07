@@ -104,34 +104,34 @@ MOZILLA_CONFIGURE_FLAGS += $(SYSBASE_X11)
 .ENDIF
 
 MOZILLA_CONFIGURE_FLAGS +=  --disable-tests \
-                --enable-application=suite \
-                --enable-ldap \
-                --enable-crypto \
-                --enable-optimize \
-                --enable-strip \
-                --disable-profilelocking \
-                --disable-activex \
-                --disable-activex-scripting \
-                --disable-gnomevfs \
-                --disable-debug \
-                --disable-xprint \
-                --disable-postscript \
-                --without-system-zlib \
-                --disable-installer \
-                --disable-accessibility \
-                --disable-xpfe-components \
-                --disable-mathml \
-                --disable-oji \
-                --disable-profilesharing \
-                --disable-boehm \
-                --disable-jsloader \
-                --disable-canvas \
-                --disable-freetype2 \
-                --disable-gnomeui \
-                --disable-image-encoders \
-                --disable-plugins \
-                --disable-printing \
-                --enable-extensions="pref"
+				--enable-application=suite \
+				--enable-ldap \
+				--enable-crypto \
+				--enable-optimize \
+				--enable-strip \
+				--disable-profilelocking \
+				--disable-activex \
+				--disable-activex-scripting \
+				--disable-gnomevfs \
+				--disable-debug \
+				--disable-xprint \
+				--disable-postscript \
+				--without-system-zlib \
+				--disable-installer \
+				--disable-accessibility \
+				--disable-xpfe-components \
+				--disable-mathml \
+				--disable-oji \
+				--disable-profilesharing \
+				--disable-boehm \
+				--disable-jsloader \
+				--disable-canvas \
+				--disable-freetype2 \
+				--disable-gnomeui \
+				--disable-image-encoders \
+				--disable-plugins \
+				--disable-printing \
+				--enable-extensions="pref"
 
 #.IF "$(GUI)"!="WNT"
 #MOZILLA_CONFIGURE_FLAGS += --enable-system-cairo
@@ -146,10 +146,10 @@ MOZILLA_CONFIGURE_FLAGS +=  --disable-tests \
 .IF "$(GUIBASE)"=="aqua"
 MACDEVSDK*=/Developer/SDKs/MacOSX10.4u.sdk
 MOZILLA_CONFIGURE_FLAGS+= \
-    --with-macos-sdk=$(MACDEVSDK) \
-    --disable-glibtest \
-    --enable-macos-target=10.4 \
-    --disable-libxul
+	--with-macos-sdk=$(MACDEVSDK) \
+	--disable-glibtest \
+	--enable-macos-target=10.4 \
+	--disable-libxul
 DEFAULT_MOZILLA_TOOLKIT=mac
 .ELSE
 #We do not need mozilla ui, but libIDL version are decided by default toolkit.
@@ -183,6 +183,10 @@ CXXFLAGS+=-m64
 .ENDIF
 .EXPORT : CXXFLAGS
 .ENDIF          # "$(COMNAME)"=="sunpro5"
+.IF "$(COM)$(OS)$(CPUNAME)" == "GCCLINUXPOWERPC64"
+CXXFLAGS:=-mminimal-toc
+.EXPORT : CXXFLAGS
+.ENDIF
 .ENDIF
 
 .IF "$(OS)"=="SOLARIS" && "$(CPUNAME)"=="SPARC" && "$(CPU)"=="U"
@@ -268,7 +272,7 @@ LIBIDL_PREFIX:=$(MOZ_TOOLS)/vc71
 
 .IF "$(BUILD_MOZAB)"==""
 all:
-    @echo "Never Build Mozilla."
+	@echo "Never Build Mozilla."
 .ENDIF	
 
 .INCLUDE : set_ext.mk
@@ -280,8 +284,8 @@ NEEDWINTOOLSFLAGFILE:=$(MISC)$/build$/moztools.complete
 .ENDIF # "$(GUI)"=="WNT"
 
 ALLTAR: $(NEEDWINTOOLSFLAGFILE) \
-    $(MISC)$/remove_build.flag \
-    extract_mozab_files
+	$(MISC)$/remove_build.flag \
+	extract_mozab_files
 
 $(PACKAGE_DIR)$/$(UNTAR_FLAG_FILE) : $(MISC)$/remove_build.flag
 
@@ -289,8 +293,8 @@ $(PACKAGE_DIR)$/$(UNTAR_FLAG_FILE) : $(MISC)$/remove_build.flag
 # patch at configure level), we remove the entire package directory if a patch
 # is newer.
 $(MISC)$/remove_build.flag : $(PATCH_FILES)
-    $(REMOVE_PACKAGE_COMMAND)
-    $(TOUCH) $(MISC)$/remove_build.flag
+	$(REMOVE_PACKAGE_COMMAND)
+	$(TOUCH) $(MISC)$/remove_build.flag
 
 # Unpack/setup Windows build tools
 .IF "$(GUI)"=="WNT"
@@ -298,50 +302,50 @@ $(PACKAGE_DIR)$/$(UNTAR_FLAG_FILE) : $(MISC)$/build$/moztools.complete
 
 .IF "$(COM)"=="GCC"
 $(MISC)$/build$/moztools.unpack : $(PRJ)$/download$/$(MOZTOOLS_ZIPFILE_NAME)
-    -$(RENAME) $(MOZTOOLSUNPACK) $(MOZTOOLSUNPACK)_removeme
-    -$(RENAME) $(MOZTOOLSINST) $(MOZTOOLSINST)_removeme
-    -rm -rf $(MOZTOOLSUNPACK)_removeme $(MOZTOOLSINST)_removeme
-    @-$(MKDIRHIER) $(MOZTOOLSUNPACK)
-    unzip $(PRJ)$/download$/$(MOZTOOLS_ZIPFILE_NAME) -d $(MOZTOOLSUNPACK)
-    $(TOUCH) $(MISC)$/build$/moztools.unpack
+	-$(RENAME) $(MOZTOOLSUNPACK) $(MOZTOOLSUNPACK)_removeme
+	-$(RENAME) $(MOZTOOLSINST) $(MOZTOOLSINST)_removeme
+	-rm -rf $(MOZTOOLSUNPACK)_removeme $(MOZTOOLSINST)_removeme
+	@-$(MKDIRHIER) $(MOZTOOLSUNPACK)
+	unzip $(PRJ)$/download$/$(MOZTOOLS_ZIPFILE_NAME) -d $(MOZTOOLSUNPACK)
+	$(TOUCH) $(MISC)$/build$/moztools.unpack
 
 $(MISC)$/build$/moztools.install : $(MISC)$/build$/moztools.unpack
-    cd $(MOZTOOLSUNPACK)$/buildtools$/windows && $(SET_MOZ_TOOLS_INSTALL_BAT) && cmd /c install.bat
-    $(TOUCH) $(MISC)$/build$/moztools.install
+	cd $(MOZTOOLSUNPACK)$/buildtools$/windows && $(SET_MOZ_TOOLS_INSTALL_BAT) && cmd /c install.bat
+	$(TOUCH) $(MISC)$/build$/moztools.install
 
 $(MISC)$/build$/moztools.complete : \
   $(MISC)$/build$/moztools.install \
   $(PRJ)$/download$/$(LIBIDL_VC71_ZIPFILE_NAME) \
   $(PRJ)$/download$/$(LIBGLIB_VC71_ZIPFILE_NAME)
-    unzip $(PRJ)$/download$/$(LIBIDL_VC71_ZIPFILE_NAME) -d $(MOZTOOLSINST)
-    unzip $(PRJ)$/download$/$(LIBGLIB_VC71_ZIPFILE_NAME) -d $(MOZTOOLSINST)
+	unzip $(PRJ)$/download$/$(LIBIDL_VC71_ZIPFILE_NAME) -d $(MOZTOOLSINST)
+	unzip $(PRJ)$/download$/$(LIBGLIB_VC71_ZIPFILE_NAME) -d $(MOZTOOLSINST)
 # chmod is also needed for W32-4nt build (when cygwin unzip is used)
-    -chmod -R +x $(MOZTOOLSINST)$/vc71$/bin
-    $(TOUCH) $(MISC)$/build$/moztools.complete
+	-chmod -R +x $(MOZTOOLSINST)$/vc71$/bin
+	$(TOUCH) $(MISC)$/build$/moztools.complete
 .ELSE
 $(MISC)$/build$/moztools.unpack : $(PRJ)$/download$/$(MOZTOOLS_ZIPFILE_NAME)
-    -$(RENAME) $(MOZTOOLS_EXTRACT) $(MOZTOOLS_EXTRACT)_removeme
-    -rm -rf $(MOZTOOLS_EXTRACT)_removeme
-    @-$(MKDIRHIER) $(MOZTOOLS_EXTRACT)
-    unzip $(PRJ)$/download$/$(MOZTOOLS_ZIPFILE_NAME) -d $(MOZTOOLS_EXTRACT)
+	-$(RENAME) $(MOZTOOLS_EXTRACT) $(MOZTOOLS_EXTRACT)_removeme
+	-rm -rf $(MOZTOOLS_EXTRACT)_removeme
+	@-$(MKDIRHIER) $(MOZTOOLS_EXTRACT)
+	unzip $(PRJ)$/download$/$(MOZTOOLS_ZIPFILE_NAME) -d $(MOZTOOLS_EXTRACT)
 # chmod is also needed for W32-4nt build (when cygwin unzip is used)
-    -chmod -R +x $(MOZTOOLS_EXTRACT)$/vc8-moztools$/bin
-    $(TOUCH) $(MISC)$/build$/moztools.unpack
+	-chmod -R +x $(MOZTOOLS_EXTRACT)$/vc8-moztools$/bin
+	$(TOUCH) $(MISC)$/build$/moztools.unpack
 
 $(MISC)$/build$/moztools.complete : $(MISC)$/build$/moztools.unpack
-    $(TOUCH) $(MISC)$/build$/moztools.complete
+	$(TOUCH) $(MISC)$/build$/moztools.complete
 .ENDIF
 .ENDIF # "$(GUI)"=="WNT"
 
 zip:	\
-    $(MISC)$/CREATETARBALL
+	$(MISC)$/CREATETARBALL
 
 .IF "$(GUIBASE)"=="aqua"
 MOZ_ARCH=$(eq,$(CPU),I i386 ppc)
 MOZILLA_CONFIGURE_FLAGS+=$(eq,$(CPU),I --target=i386-apple-darwin8 --target=powerpc-apple-darwin8)
 
 force_clean :
-    @$(IFEXIST) $(PACKAGE_DIR)$/$(PREDELIVER_FLAG_FILE) $(THEN) echo 'ERROR: get rid of your outputdir first (or refactor the makefiles to allow incremental creation of prebuilt zips). Remember to copy already created zips to a safe place '; exit 1 $(FI)
+	@$(IFEXIST) $(PACKAGE_DIR)$/$(PREDELIVER_FLAG_FILE) $(THEN) echo 'ERROR: get rid of your outputdir first (or refactor the makefiles to allow incremental creation of prebuilt zips). Remember to copy already created zips to a safe place '; exit 1 $(FI)
 
 zip_intel .SEQUENTIAL: force_clean $(MISC)$/CREATETARBALL
 
@@ -357,72 +361,72 @@ zip_ppc ?= MOZILLA_CONFIGURE_FLAGS+=--target=powerpc-apple-darwin8
 zip_ppc ?= CPU=P
 
 zip_universal: $(OUT)$/zipped$/$(OS)$(COM)UBinc.zip $(OUT)$/zipped$/$(OS)$(COM)UBlib.zip $(OUT)$/zipped$/$(OS)$(COM)UBruntime.zip
-    @echo "All zips created successfully - copy from $(OUT)$/zipped to \$$SRC_ROOT/moz/zipped and use --disable-build-mozilla to use them"
+	@echo "All zips created successfully - copy from $(OUT)$/zipped to \$$SRC_ROOT/moz/zipped and use --disable-build-mozilla to use them"
 
 $(OUT)$/zipped$/$(OS)$(COM)UBinc.zip : zipped$/$(OS)$(COM)Pinc.zip zipped$/$(OS)$(COM)Iinc.zip
-    @echo "setting up for $@"
-    @rm -rf $(MISC)$/UB_inc
-    @$(MKDIRHIER) $(MISC)$/UB_inc$/intel
-    @$(MKDIR) $(MISC)$/UB_inc$/ppc
-    @$(MKDIR) $(MISC)$/UB_inc$/uni
-    @unzip -q zipped$/$(OS)$(COM)Pinc.zip -d $(MISC)$/UB_inc$/ppc
-    @unzip -q zipped$/$(OS)$(COM)Iinc.zip -d $(MISC)$/UB_inc$/intel
+	@echo "setting up for $@"
+	@rm -rf $(MISC)$/UB_inc
+	@$(MKDIRHIER) $(MISC)$/UB_inc$/intel
+	@$(MKDIR) $(MISC)$/UB_inc$/ppc
+	@$(MKDIR) $(MISC)$/UB_inc$/uni
+	@unzip -q zipped$/$(OS)$(COM)Pinc.zip -d $(MISC)$/UB_inc$/ppc
+	@unzip -q zipped$/$(OS)$(COM)Iinc.zip -d $(MISC)$/UB_inc$/intel
 # use one of the two as basis for the universal one - (saves manually creating directories/copying identical files)
-    @unzip -q zipped$/$(OS)$(COM)Pinc.zip -d $(MISC)$/UB_inc$/uni
+	@unzip -q zipped$/$(OS)$(COM)Pinc.zip -d $(MISC)$/UB_inc$/uni
 # add safety-warning to host-autogenerated headers (aren't used anywhere in OOo currently, but doesn't hurt to be safe
 # bail out on everything that differs and is not a *.h file
-    @echo "flagging endian-specific headers with #error.."
-    @diff --brief -r $(MISC)$/UB_inc$/ppc $(MISC)$/UB_inc$/intel | awk \
-      '/^Only in/ {{print; print "ERROR - file sets differ!"; exit 1}} \
-       /^Files .*\.h differ$$/ {{target="$(MISC)$/UB_inc$/uni$/" substr($$2,length("$(MISC)$/UB_inc$/ppc")+2); \
-         system("echo \"#error use native moz-zips, this header is endian-specific!\" | cat - " $$2 " > " target); next}} \
-                  {{print; print "ERROR - unexpected files encountered!"; exit 2}}'
-    @cd $(MISC)$/UB_inc$/uni ; zip -q -r ..$/$(@:f) *
-    @$(MKDIRHIER) $(@:d)
-    @$(MV) $(MISC)$/UB_inc$/$(@:f) $@
-    @echo "successfully created $@"
+	@echo "flagging endian-specific headers with #error.."
+	@diff --brief -r $(MISC)$/UB_inc$/ppc $(MISC)$/UB_inc$/intel | awk \
+	  '/^Only in/ {{print; print "ERROR - file sets differ!"; exit 1}} \
+	   /^Files .*\.h differ$$/ {{target="$(MISC)$/UB_inc$/uni$/" substr($$2,length("$(MISC)$/UB_inc$/ppc")+2); \
+	     system("echo \"#error use native moz-zips, this header is endian-specific!\" | cat - " $$2 " > " target); next}} \
+	              {{print; print "ERROR - unexpected files encountered!"; exit 2}}'
+	@cd $(MISC)$/UB_inc$/uni ; zip -q -r ..$/$(@:f) *
+	@$(MKDIRHIER) $(@:d)
+	@$(MV) $(MISC)$/UB_inc$/$(@:f) $@
+	@echo "successfully created $@"
 
 $(OUT)$/zipped$/$(OS)$(COM)UBlib.zip : zipped$/$(OS)$(COM)Plib.zip zipped$/$(OS)$(COM)Ilib.zip
-    @echo "setting up for $@"
-    @rm -rf $(MISC)$/UB_lib
-    @$(MKDIRHIER) $(MISC)$/UB_lib$/intel
-    @$(MKDIR) $(MISC)$/UB_lib$/ppc
-    @$(MKDIR) $(MISC)$/UB_lib$/uni
-    @unzip -q zipped$/$(OS)$(COM)Plib.zip -d $(MISC)$/UB_lib$/ppc
-    @unzip -q zipped$/$(OS)$(COM)Ilib.zip -d $(MISC)$/UB_lib$/intel
+	@echo "setting up for $@"
+	@rm -rf $(MISC)$/UB_lib
+	@$(MKDIRHIER) $(MISC)$/UB_lib$/intel
+	@$(MKDIR) $(MISC)$/UB_lib$/ppc
+	@$(MKDIR) $(MISC)$/UB_lib$/uni
+	@unzip -q zipped$/$(OS)$(COM)Plib.zip -d $(MISC)$/UB_lib$/ppc
+	@unzip -q zipped$/$(OS)$(COM)Ilib.zip -d $(MISC)$/UB_lib$/intel
 # use lipo on .a and .dylib files - bail out on anything else
-    @echo "creating universal binaries from libs..."
-    @diff --brief -s -r $(MISC)$/UB_lib$/ppc $(MISC)$/UB_lib$/intel | awk \
-      '/^Only in/ {{print "ERROR - file sets differ!"; print; exit 1}} \
-       /^Files .*\.(a|dylib) differ$$/ {{target="$(MISC)$/UB_lib$/uni$/" substr($$2,length("$(MISC)$/UB_lib$/ppc")+2); \
-         if(0!=system("lipo -create -arch ppc "$$2" -arch i386 "$$4" -output " target)) exit 11; next}} \
-                  {{print; print "ERROR - unexpected files encountered!"; exit 2}}'
-    @cd $(MISC)$/UB_lib$/uni ; zip -q -r ..$/$(@:f) *
-    @$(MKDIRHIER) $(@:d)
-    @$(MV) $(MISC)$/UB_lib$/$(@:f) $@
-    @echo "successfully created $@"
+	@echo "creating universal binaries from libs..."
+	@diff --brief -s -r $(MISC)$/UB_lib$/ppc $(MISC)$/UB_lib$/intel | awk \
+	  '/^Only in/ {{print "ERROR - file sets differ!"; print; exit 1}} \
+	   /^Files .*\.(a|dylib) differ$$/ {{target="$(MISC)$/UB_lib$/uni$/" substr($$2,length("$(MISC)$/UB_lib$/ppc")+2); \
+	     if(0!=system("lipo -create -arch ppc "$$2" -arch i386 "$$4" -output " target)) exit 11; next}} \
+	              {{print; print "ERROR - unexpected files encountered!"; exit 2}}'
+	@cd $(MISC)$/UB_lib$/uni ; zip -q -r ..$/$(@:f) *
+	@$(MKDIRHIER) $(@:d)
+	@$(MV) $(MISC)$/UB_lib$/$(@:f) $@
+	@echo "successfully created $@"
 
 $(OUT)$/zipped$/$(OS)$(COM)UBruntime.zip : zipped$/$(OS)$(COM)Pruntime.zip zipped$/$(OS)$(COM)Iruntime.zip
-    @echo "setting up for $@"
-    @rm -rf $(MISC)$/UB_runtime
-    @$(MKDIRHIER) $(MISC)$/UB_runtime$/intel
-    @$(MKDIR) $(MISC)$/UB_runtime$/ppc
-    @$(MKDIR) $(MISC)$/UB_runtime$/uni
-    @unzip -q zipped$/$(OS)$(COM)Pruntime.zip -d $(MISC)$/UB_runtime$/ppc
-    @unzip -q zipped$/$(OS)$(COM)Iruntime.zip -d $(MISC)$/UB_runtime$/intel
+	@echo "setting up for $@"
+	@rm -rf $(MISC)$/UB_runtime
+	@$(MKDIRHIER) $(MISC)$/UB_runtime$/intel
+	@$(MKDIR) $(MISC)$/UB_runtime$/ppc
+	@$(MKDIR) $(MISC)$/UB_runtime$/uni
+	@unzip -q zipped$/$(OS)$(COM)Pruntime.zip -d $(MISC)$/UB_runtime$/ppc
+	@unzip -q zipped$/$(OS)$(COM)Iruntime.zip -d $(MISC)$/UB_runtime$/intel
 # use one of the two as basis for the universal one - (saves manually creating directories/copying identical files)
-    @unzip -q zipped$/$(OS)$(COM)Pruntime.zip -d $(MISC)$/UB_runtime$/uni
+	@unzip -q zipped$/$(OS)$(COM)Pruntime.zip -d $(MISC)$/UB_runtime$/uni
 # @line -comments in autogenerated files: contains path of source-file, ignore different objdirs
-    @echo "creating universal binaries from libs..."
-    @diff --brief -I "^//@line [0-9][0-9]*" -r $(MISC)$/UB_runtime$/ppc $(MISC)$/UB_runtime$/intel | awk \
-      '/^Only in/ {{print; print "ERROR - file sets differ!"; exit 1}} \
+	@echo "creating universal binaries from libs..."
+	@diff --brief -I "^//@line [0-9][0-9]*" -r $(MISC)$/UB_runtime$/ppc $(MISC)$/UB_runtime$/intel | awk \
+	  '/^Only in/ {{print; print "ERROR - file sets differ!"; exit 1}} \
            /^Files .*\.dylib differ$$/ {{target="$(MISC)$/UB_runtime$/uni$/" substr($$2,length("$(MISC)$/UB_runtime$/ppc")+2); \
              if(0!=system("lipo -create -arch ppc "$$2" -arch i386 "$$4" -output " target)) exit 11; next}} \
                       {{print; print "ERROR - unexpected files encountered!"; exit 2}}'
-    @cd $(MISC)$/UB_lib$/uni ; zip -q -r ..$/$(@:f) *
-    @$(MKDIRHIER) $(@:d)
-    @$(MV) $(MISC)$/UB_lib$/$(@:f) $@
-    @echo "successfully created $@"
+	@cd $(MISC)$/UB_lib$/uni ; zip -q -r ..$/$(@:f) *
+	@$(MKDIRHIER) $(@:d)
+	@$(MV) $(MISC)$/UB_lib$/$(@:f) $@
+	@echo "successfully created $@"
 
 .ENDIF # $(GUIBASE)=="aqua"
 
