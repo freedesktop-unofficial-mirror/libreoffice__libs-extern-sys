@@ -86,6 +86,7 @@ icu_LDFLAGS+=-Wl,-z,noexecstack
 .ENDIF
 
 icu_CFLAGS+=-O $(ARCH_FLAGS) $(EXTRA_CDEFS)
+icu_LDFLAGS+=$(EXTRA_LINKFLAGS)
 icu_CXXFLAGS+=-O $(ARCH_FLAGS) $(EXTRA_CDEFS)
 
 BUILD_ACTION_SEP=;
@@ -122,26 +123,26 @@ CONFIGURE_FLAGS=
 BUILD_DIR=$(CONFIGURE_DIR)
 BUILD_ACTION=$(AUGMENT_LIBRARY_PATH) $(GNUMAKE)
 OUT2LIB= \
-    $(BUILD_DIR)$/lib$/libicudata$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
-    $(BUILD_DIR)$/lib$/libicudata$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
-    $(BUILD_DIR)$/lib$/libicudata$(DLLPOST) \
-    $(BUILD_DIR)$/lib$/libicuuc$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
-    $(BUILD_DIR)$/lib$/libicuuc$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
-    $(BUILD_DIR)$/lib$/libicuuc$(DLLPOST) \
-    $(BUILD_DIR)$/lib$/libicui18n$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
-    $(BUILD_DIR)$/lib$/libicui18n$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
-    $(BUILD_DIR)$/lib$/libicui18n$(DLLPOST) \
-    $(BUILD_DIR)$/lib$/libicule$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
-    $(BUILD_DIR)$/lib$/libicule$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
-    $(BUILD_DIR)$/lib$/libicule$(DLLPOST) \
-    $(BUILD_DIR)$/lib$/libicutu$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
-    $(BUILD_DIR)$/lib$/libicutu$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
-    $(BUILD_DIR)$/lib$/libicutu$(DLLPOST)
+	$(BUILD_DIR)$/lib$/libicudata$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
+	$(BUILD_DIR)$/lib$/libicudata$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
+	$(BUILD_DIR)$/lib$/libicudata$(DLLPOST) \
+	$(BUILD_DIR)$/lib$/libicuuc$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
+	$(BUILD_DIR)$/lib$/libicuuc$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
+	$(BUILD_DIR)$/lib$/libicuuc$(DLLPOST) \
+	$(BUILD_DIR)$/lib$/libicui18n$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
+	$(BUILD_DIR)$/lib$/libicui18n$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
+	$(BUILD_DIR)$/lib$/libicui18n$(DLLPOST) \
+	$(BUILD_DIR)$/lib$/libicule$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
+	$(BUILD_DIR)$/lib$/libicule$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
+	$(BUILD_DIR)$/lib$/libicule$(DLLPOST) \
+	$(BUILD_DIR)$/lib$/libicutu$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR).$(ICU_MICRO) \
+	$(BUILD_DIR)$/lib$/libicutu$(DLLPOST).$(ICU_MAJOR)$(ICU_MINOR) \
+	$(BUILD_DIR)$/lib$/libicutu$(DLLPOST)
 
 OUT2BIN= \
-    $(BUILD_DIR)$/bin$/genccode \
-    $(BUILD_DIR)$/bin$/genbrk \
-    $(BUILD_DIR)$/bin$/gencmn
+	$(BUILD_DIR)$/bin$/genccode \
+	$(BUILD_DIR)$/bin$/genbrk \
+	$(BUILD_DIR)$/bin$/gencmn
 
 .ENDIF
 
@@ -149,11 +150,18 @@ OUT2BIN= \
 CONFIGURE_DIR=source
 .IF "$(COM)"=="GCC"
 CONFIGURE_ACTION=rm data/mappings/ucm*.mk data/translit/trn*.mk ;
-.IF "$(USE_MINGW)"=="cygwin"
-CONFIGURE_ACTION+=sh -c 'CFLAGS="-O -D_MT" CXXFLAGS="-O -D_MT" LDFLAGS="-L$(COMPATH)/lib/mingw -L$(COMPATH)/lib/w32api -L$(COMPATH)$/lib" LIBS="-lmingwthrd" ./configure --build=i586-pc-mingw32 --enable-layout --enable-static --enable-shared=yes --enable-64bit-libs=no'
-.ELSE
-CONFIGURE_ACTION+=sh -c 'CFLAGS="-O -D_MT" CXXFLAGS="-O -D_MT" LDFLAGS="-L$(COMPATH)$/lib" LIBS="-lmingwthrd" ./configure --build=i586-pc-mingw32 --enable-layout --enable-static --enable-shared=yes --enable-64bit-libs=no'
+.IF "$(MINGW_SHARED_GCCLIB)"=="YES"
+icu_LDFLAGS+=-shared-libgcc
 .ENDIF
+.IF "$(USE_MINGW)"=="cygwin"
+icu_LDFLAGS+=-L$(COMPATH)/lib/mingw -L$(COMPATH)/lib/w32api
+.ENDIF
+icu_LDFLAGS+=-L$(COMPATH)$/lib
+icu_LIBS=-lmingwthrd
+.IF "$(MINGW_SHARED_GXXLIB)"=="YES"
+icu_LIBS+=-lstdc++_s
+.ENDIF
+CONFIGURE_ACTION+=sh -c 'CFLAGS="-O -D_MT" CXXFLAGS="-O -D_MT" LDFLAGS="$(icu_LDFLAGS)" LIBS="$(icu_LIBS)" ./configure --build=i586-pc-mingw32 --enable-layout --enable-static --enable-shared=yes --enable-64bit-libs=no'
 
 #CONFIGURE_FLAGS=--enable-layout --enable-static --enable-shared=yes --enable-64bit-libs=no
 CONFIGURE_FLAGS=
@@ -170,14 +178,14 @@ BUILD_ACTION=$(GNUMAKE)
 OUT2LIB=
 
 OUT2BIN= \
-    $(BUILD_DIR)$/lib$/icudt$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
-    $(BUILD_DIR)$/lib$/icuuc$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
-    $(BUILD_DIR)$/lib$/icuin$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
-    $(BUILD_DIR)$/lib$/icule$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
-    $(BUILD_DIR)$/lib$/icutu$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
-    $(BUILD_DIR)$/bin$/genccode.exe \
-    $(BUILD_DIR)$/bin$/genbrk.exe \
-    $(BUILD_DIR)$/bin$/gencmn.exe
+	$(BUILD_DIR)$/lib$/icudt$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
+	$(BUILD_DIR)$/lib$/icuuc$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
+	$(BUILD_DIR)$/lib$/icuin$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
+	$(BUILD_DIR)$/lib$/icule$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
+	$(BUILD_DIR)$/lib$/icutu$(ICU_MAJOR)$(ICU_MINOR)$(DLLPOST) \
+	$(BUILD_DIR)$/bin$/genccode.exe \
+	$(BUILD_DIR)$/bin$/genbrk.exe \
+	$(BUILD_DIR)$/bin$/gencmn.exe
 
 .ELSE
 .IF "$(USE_SHELL)"=="4nt"
@@ -222,20 +230,20 @@ BUILD_ACTION=cd allinone && nmake /f all.mak EXFLAGS="-EHa -Zc:wchar_t-" && cd .
 .ENDIF
 
 OUT2LIB= \
-    $(BUILD_DIR)$/..$/lib$/icudata.lib \
-    $(BUILD_DIR)$/..$/lib$/icuin$(ICU_BUILD_LIBPOST).lib \
-    $(BUILD_DIR)$/..$/lib$/icuuc$(ICU_BUILD_LIBPOST).lib \
-    $(BUILD_DIR)$/..$/lib$/icule$(ICU_BUILD_LIBPOST).lib \
-    $(BUILD_DIR)$/..$/lib$/icutu$(ICU_BUILD_LIBPOST).lib
+	$(BUILD_DIR)$/..$/lib$/icudata.lib \
+	$(BUILD_DIR)$/..$/lib$/icuin$(ICU_BUILD_LIBPOST).lib \
+	$(BUILD_DIR)$/..$/lib$/icuuc$(ICU_BUILD_LIBPOST).lib \
+	$(BUILD_DIR)$/..$/lib$/icule$(ICU_BUILD_LIBPOST).lib \
+	$(BUILD_DIR)$/..$/lib$/icutu$(ICU_BUILD_LIBPOST).lib
 
 OUT2BIN= \
-    $(BUILD_DIR)$/..$/bin$/icudt$(ICU_MAJOR)$(ICU_MINOR).dll \
-    $(BUILD_DIR)$/..$/bin$/icuin$(ICU_MAJOR)$(ICU_MINOR)$(ICU_BUILD_LIBPOST).dll \
-    $(BUILD_DIR)$/..$/bin$/icuuc$(ICU_MAJOR)$(ICU_MINOR)$(ICU_BUILD_LIBPOST).dll \
-    $(BUILD_DIR)$/..$/bin$/icule$(ICU_MAJOR)$(ICU_MINOR)$(ICU_BUILD_LIBPOST).dll \
-    $(BUILD_DIR)$/..$/bin$/icutu$(ICU_MAJOR)$(ICU_MINOR)$(ICU_BUILD_LIBPOST).dll \
-    $(BUILD_DIR)$/..$/bin$/genccode.exe \
-    $(BUILD_DIR)$/..$/bin$/genbrk.exe \
+	$(BUILD_DIR)$/..$/bin$/icudt$(ICU_MAJOR)$(ICU_MINOR).dll \
+	$(BUILD_DIR)$/..$/bin$/icuin$(ICU_MAJOR)$(ICU_MINOR)$(ICU_BUILD_LIBPOST).dll \
+	$(BUILD_DIR)$/..$/bin$/icuuc$(ICU_MAJOR)$(ICU_MINOR)$(ICU_BUILD_LIBPOST).dll \
+	$(BUILD_DIR)$/..$/bin$/icule$(ICU_MAJOR)$(ICU_MINOR)$(ICU_BUILD_LIBPOST).dll \
+	$(BUILD_DIR)$/..$/bin$/icutu$(ICU_MAJOR)$(ICU_MINOR)$(ICU_BUILD_LIBPOST).dll \
+	$(BUILD_DIR)$/..$/bin$/genccode.exe \
+	$(BUILD_DIR)$/..$/bin$/genbrk.exe \
     $(BUILD_DIR)$/..$/bin$/gencmn.exe
 
 .ENDIF
@@ -250,8 +258,8 @@ OUT2BIN= \
 .IF "$(BINARY_PATCH_FILES)"!=""
 
 $(PACKAGE_DIR)$/so_add_binary :  $(PACKAGE_DIR)$/$(ADD_FILES_FLAG_FILE)
-    cd $(PACKAGE_DIR) && gunzip -c $(BACK_PATH)$(BINARY_PATCH_FILES) | tar $(TAR_EXCLUDE_SWITCH) -xvf -
-    $(TOUCH) $(PACKAGE_DIR)$/so_add_binary
+	cd $(PACKAGE_DIR) && gunzip -c $(BACK_PATH)$(BINARY_PATCH_FILES) | tar $(TAR_EXCLUDE_SWITCH) -xvf -
+	$(TOUCH) $(PACKAGE_DIR)$/so_add_binary
 
 $(PACKAGE_DIR)$/$(CONFIGURE_FLAG_FILE) : $(PACKAGE_DIR)$/so_add_binary
 
