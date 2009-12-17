@@ -40,8 +40,8 @@ TARGET=so_libxslt
 
 .IF "$(SYSTEM_LIBXSLT)" == "YES"
 all:
-    @echo "An already available installation of libxslt should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of libxslt should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -53,7 +53,7 @@ all:
 LIBXSLTVERSION=$(LIBXSLT_MAJOR).$(LIBXSLT_MINOR).$(LIBXSLT_MICRO)
 
 TARFILE_NAME=$(PRJNAME)-$(LIBXSLTVERSION)
-PATCH_FILES=$(TARFILE_NAME).patch $(TARFILE_NAME)_win_manifest.patch
+PATCH_FILES=libxslt-configure.patch libxslt-win_manifest.patch
 
 # This is only for UNX environment now
 .IF "$(OS)"=="WNT"
