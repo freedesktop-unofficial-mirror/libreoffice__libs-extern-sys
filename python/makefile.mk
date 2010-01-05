@@ -41,8 +41,8 @@ TARGET=so_python
 
 .IF "$(SYSTEM_PYTHON)" == "YES"
 all:
-    @echo "An already available installation of python should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of python should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 
@@ -80,11 +80,7 @@ CONFIGURE_ACTION=$(AUGMENT_LIBRARY_PATH) ./configure --prefix=$(MYCWD)/python-in
 .IF "$(OS)$(CPU)" == "SOLARISI"
 CONFIGURE_ACTION += --disable-ipv6
 .ENDIF
-.IF "$(OS)" == "IRIX"
-BUILD_ACTION=$(ENV_BUILD) gmake -j$(EXTMAXPROCESS) ; gmake install
-.ELSE
 BUILD_ACTION=$(ENV_BUILD) $(GNUMAKE) -j$(EXTMAXPROCESS) ; $(GNUMAKE) install ; chmod -R ug+w $(MYCWD)/python-inst
-.ENDIF
 .ELSE
 # ----------------------------------
 # WINDOWS
@@ -146,8 +142,8 @@ $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h : $(PACKAGE_DIR)$/$(CONFIGURE_FL
 $(PACKAGE_DIR)$/$(BUILD_FLAG_FILE) : $(PYCONFIG)
 
 $(PYCONFIG) : $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h
-    -rm -f $@
-    cat $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h > $@
+	-rm -f $@
+	cat $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h > $@
 .ENDIF
 .ENDIF
 
@@ -156,6 +152,6 @@ ALLTAR : $(PYVERSIONFILE)
 
 
 $(PYVERSIONFILE) : pyversion.mk $(PACKAGE_DIR)$/$(PREDELIVER_FLAG_FILE)
-    -rm -f $@
-    cat $? > $@
+	-rm -f $@
+	cat $? > $@
 
