@@ -1,7 +1,7 @@
 #*************************************************************************
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
-# 
+#
 # Copyright 2008 by Sun Microsystems, Inc.
 #
 # OpenOffice.org - a multi-platform office productivity suite
@@ -40,8 +40,8 @@ TARGET=so_berkeleydb
 
 .IF "$(SYSTEM_DB)" == "YES"
 all:
-    @echo "An already available installation of db should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of db should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -58,8 +58,6 @@ ADDITIONAL_FILES= \
     qam$/makefile.mk rep$/makefile.mk repmgr$/makefile.mk \
     sequence$/makefile.mk txn$/makefile.mk xa$/makefile.mk \
     db_4_7_gcc4.map
-
-
 
 # not needed for win32. comment out when causing problems...
 .IF "$(GUI)$(COM)"=="WNTGCC"
@@ -100,7 +98,7 @@ LDFLAGS:=$(ARCH_FLAGS) -R\''$$$$ORIGIN'\'
 CONFIGURE_DIR=out
 #relative to CONFIGURE_DIR
 CONFIGURE_ACTION= \
-    ..$/dist$/configure
+	..$/dist$/configure
 CONFIGURE_FLAGS=--disable-cxx --enable-dynamic --enable-shared --enable-compat185
 .IF "$(OS)"=="MACOSX"
 CONFIGURE_FLAGS+=CPPFLAGS="$(EXTRA_CDEFS)"
@@ -112,17 +110,11 @@ CXXFLAGS+:=$(ARCH_FLAGS)
 
 BUILD_DIR=$(CONFIGURE_DIR)
 BUILD_DIR_OUT=$(CONFIGURE_DIR)
-
-.IF "$(OS)"=="IRIX"
-CONFIGURE_ACTION= $(CONFIG_SHELL) ..$/dist$/configure
-BUILD_ACTION=gmake 
-.ELSE
 BUILD_ACTION=make
-.ENDIF
 
 OUT2LIB=$(BUILD_DIR)$/.libs$/libdb*$(DLLPOST)
 OUT2INC= \
-    $(BUILD_DIR)$/db.h
+	$(BUILD_DIR)$/db.h
 
 .ENDIF			# "$(GUI)"=="UNX"
 
@@ -163,7 +155,7 @@ OUT2LIB=$(BUILD_DIR)$/.libs$/libdb47.dll.a
 OUT2BIN=$(BUILD_DIR)$/.libs$/libdb47.dll
 
 OUT2INC= \
-    $(BUILD_DIR)$/db.h
+	$(BUILD_DIR)$/db.h
 .IF "$(GUI)$(COM)"=="WNTGCC"
 .EXPORT : PWD
 .ENDIF
@@ -185,7 +177,7 @@ BUILD_DIR_OUT=build_windows
 #	$(BUILD_DIR_OUT)$/Release$/libdb42.lib
 #OUT2BIN=$(BUILD_DIR_OUT)$/Release$/libdb42.dll
 OUT2INC= \
-    $(BUILD_DIR_OUT)$/db.h
+	$(BUILD_DIR_OUT)$/db.h
 .ENDIF
 .ENDIF			# "$(GUI)"=="WNT"
 
