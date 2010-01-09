@@ -39,8 +39,8 @@ TARGET=so_curl
 
 .IF "$(SYSTEM_CURL)" == "YES"
 all:
-    @echo "An already available installation of curl should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of curl should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -74,11 +74,7 @@ CONFIGURE_ACTION=.$/configure
 CONFIGURE_FLAGS= --without-ssl --without-libidn --enable-ftp --enable-ipv6 --enable-http --disable-gopher --disable-file --disable-ldap --disable-telnet --disable-dict --disable-static CPPFLAGS="$(curl_CFLAGS)"  LDFLAGS="$(curl_LDFLAGS)"
 
 BUILD_DIR=$(CONFIGURE_DIR)$/lib
-.IF "$(OS)"=="IRIX"
-BUILD_ACTION=gmake
-.ELSE
 BUILD_ACTION=$(GNUMAKE)
-.ENDIF
 BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 
 OUT2LIB=$(BUILD_DIR)$/.libs$/libcurl$(DLLPOST).3
@@ -143,13 +139,13 @@ OUT2LIB=$(BUILD_DIR)$/libcurl.lib
 .ENDIF			# "$(GUI)"=="OS2"
 
 OUT2INC= \
-    include$/curl$/easy.h  			\
-    include$/curl$/multi.h  		\
-    include$/curl$/curl.h  			\
-    include$/curl$/curlver.h  		\
-    include$/curl$/types.h  		\
-    include$/curl$/stdcheaders.h  	\
-    include$/curl$/mprintf.h
+	include$/curl$/easy.h  			\
+	include$/curl$/multi.h  		\
+	include$/curl$/curl.h  			\
+	include$/curl$/curlver.h  		\
+	include$/curl$/types.h  		\
+	include$/curl$/stdcheaders.h  	\
+	include$/curl$/mprintf.h
 
 # --- Targets ------------------------------------------------------
 
