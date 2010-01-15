@@ -71,11 +71,12 @@ TARGET=so_graphite
 # --- Files --------------------------------------------------------
 .IF "$(ENABLE_GRAPHITE)"=="TRUE"
 TARFILE_NAME=silgraphite-2.3.1
+TARFILE_MD5=d35724900f6a4105550293686688bbb3
 PATCH_FILES=graphite-2.3.1.patch
 
 # convert line-endings to avoid problems when patching
 CONVERTFILES=\
-    engine/makefile.vc8
+	engine/makefile.vc8
 
 #.IF "$(OS)"=="WNT" && "$(COM)"!="GCC"
 #CONFIGURE_DIR=win32
@@ -175,14 +176,14 @@ OUT2BIN= \
 
 
 OUTDIR2INC= \
-    engine$/include$/graphite
+	engine$/include$/graphite
 
 .IF "$(OS)"=="WNT"
 OUT2INC=wrappers$/win32$/WinFont.h
 .ENDIF
 .ELSE
 dddd:
-    @echo Nothing to do
+	@echo Nothing to do
 .ENDIF
 # --- Targets ------------------------------------------------------
 

@@ -43,12 +43,13 @@ TARGET=saxon
 .IF "$(SYSTEM_SAXON)" == "YES"
 all:
         @echo "An already available installation of saxon should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
 
 TARFILE_NAME=source-9.0.0.7-bj
+TARFILE_MD5=ada24d37d8d638b3d8a9985e80bc2978
 ADDITIONAL_FILES=build.xml
 TARFILE_ROOTDIR=src
 
@@ -60,7 +61,7 @@ OUT2CLASS= saxon-build$/9.0.0.7$/bj$/saxon9.jar
 
 .ELSE			# $(SOLAR_JAVA)!= ""
 nojava:
-    @echo "Not building $(PRJNAME) because Java is disabled"
+	@echo "Not building $(PRJNAME) because Java is disabled"
 .ENDIF			# $(SOLAR_JAVA)!= ""
 # --- Targets ------------------------------------------------------
 

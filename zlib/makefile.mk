@@ -37,8 +37,8 @@ TARGET=zlib
 .IF "$(GUI)" == "UNX"
 .IF "$(SYSTEM_ZLIB)" == "YES"
 all:
-    @echo "An already available installation of zlib should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of zlib should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 .ENDIF
 
@@ -49,6 +49,7 @@ all:
 # --- Files --------------------------------------------------------
 
 TARFILE_NAME=zlib-1.1.4
+TARFILE_MD5=abc405d0bdd3ee22782d7aa20e440f08
 
 PATCH_FILES=zlib-1.1.4.patch
 ADDITIONAL_FILES=makefile.mk
@@ -59,10 +60,10 @@ BUILD_DIR=$(CONFIGURE_DIR)
 BUILD_ACTION=dmake $(MFLAGS) $(CALLMACROS)
 
 OUT2INC= \
-    zlib.h \
-    zconf.h \
-    contrib$/minizip$/unzip.h \
-    contrib$/minizip$/ioapi.h
+	zlib.h \
+	zconf.h \
+	contrib$/minizip$/unzip.h \
+	contrib$/minizip$/ioapi.h
 
 PATCHED_HEADERS=$(INCCOM)$/patched$/zlib.h
 

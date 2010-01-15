@@ -39,13 +39,14 @@ TARGET=so_curl
 
 .IF "$(SYSTEM_CURL)" == "YES"
 all:
-    @echo "An already available installation of curl should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of curl should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
 
 TARFILE_NAME=curl-7.12.2
+TARFILE_MD5=7a776ce208f321700d8fb0f92a133069
 PATCH_FILES=curl-7.12.2.patch
 CONVERTFILES= \
     lib$/Makefile.vc6
@@ -143,13 +144,13 @@ OUT2LIB=$(BUILD_DIR)$/libcurl.lib
 .ENDIF			# "$(GUI)"=="OS2"
 
 OUT2INC= \
-    include$/curl$/easy.h  			\
-    include$/curl$/multi.h  		\
-    include$/curl$/curl.h  			\
-    include$/curl$/curlver.h  		\
-    include$/curl$/types.h  		\
-    include$/curl$/stdcheaders.h  	\
-    include$/curl$/mprintf.h
+	include$/curl$/easy.h  			\
+	include$/curl$/multi.h  		\
+	include$/curl$/curl.h  			\
+	include$/curl$/curlver.h  		\
+	include$/curl$/types.h  		\
+	include$/curl$/stdcheaders.h  	\
+	include$/curl$/mprintf.h
 
 # --- Targets ------------------------------------------------------
 

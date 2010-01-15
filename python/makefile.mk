@@ -41,8 +41,8 @@ TARGET=so_python
 
 .IF "$(SYSTEM_PYTHON)" == "YES"
 all:
-    @echo "An already available installation of python should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of python should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 
@@ -50,6 +50,7 @@ all:
 
 
 TARFILE_NAME=Python-$(PYVERSION)
+TARFILE_MD5=e81c2f0953aa60f8062c05a4673f2be0
 PATCH_FILES=Python-$(PYVERSION).patch
 
 CONFIGURE_DIR=
@@ -146,8 +147,8 @@ $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h : $(PACKAGE_DIR)$/$(CONFIGURE_FL
 $(PACKAGE_DIR)$/$(BUILD_FLAG_FILE) : $(PYCONFIG)
 
 $(PYCONFIG) : $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h
-    -rm -f $@
-    cat $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h > $@
+	-rm -f $@
+	cat $(MISC)$/build$/$(TARFILE_NAME)$/PC$/pyconfig.h > $@
 .ENDIF
 .ENDIF
 
@@ -156,6 +157,6 @@ ALLTAR : $(PYVERSIONFILE)
 
 
 $(PYVERSIONFILE) : pyversion.mk $(PACKAGE_DIR)$/$(PREDELIVER_FLAG_FILE)
-    -rm -f $@
-    cat $? > $@
+	-rm -f $@
+	cat $? > $@
 
