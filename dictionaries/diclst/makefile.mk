@@ -43,15 +43,11 @@ TARGET	= dict_list
 all_target: $(MISC)$/$(TARGET).don 
 
 DIC2BIN= \
-    dictionary_head
-
-.IF "$(WITH_FONTOOO)" == "YES"
-DIC2BIN+=	FontOOo.sxw
-.ENDIF
+	dictionary_head
 
 $(MISC)$/$(TARGET).don : $(DIC2BIN)
-    $(COPY) $(foreach,i,$(DIC2BIN) $i) $(BIN)
-    @$(TOUCH) $@
+	$(COPY) $(foreach,i,$(DIC2BIN) $i) $(BIN)
+	@$(TOUCH) $@
 
 # --- Targets ------------------------------------------------------
 
