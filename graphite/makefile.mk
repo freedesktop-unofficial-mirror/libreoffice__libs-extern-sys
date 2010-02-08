@@ -68,6 +68,12 @@ TARGET=so_graphite
 
 .INCLUDE :	settings.mk
 
+.IF "$(SYSTEM_GRAPHITE)" == "YES"
+all:
+        @echo "An already available installation of silgraphite should exist on your system."
+        @echo "Therefore the version provided here does not need to be built in addition."
+.ENDIF
+
 # --- Files --------------------------------------------------------
 .IF "$(ENABLE_GRAPHITE)"=="TRUE"
 TARFILE_NAME=silgraphite-2.3.1
@@ -75,7 +81,7 @@ PATCH_FILES=graphite-2.3.1.patch
 
 # convert line-endings to avoid problems when patching
 CONVERTFILES=\
-    engine/makefile.vc8
+	engine/makefile.vc8
 
 #.IF "$(OS)"=="WNT" && "$(COM)"!="GCC"
 #CONFIGURE_DIR=win32
@@ -175,14 +181,14 @@ OUT2BIN= \
 
 
 OUTDIR2INC= \
-    engine$/include$/graphite
+	engine$/include$/graphite
 
 .IF "$(OS)"=="WNT"
 OUT2INC=wrappers$/win32$/WinFont.h
 .ENDIF
 .ELSE
 dddd:
-    @echo Nothing to do
+	@echo Nothing to do
 .ENDIF
 # --- Targets ------------------------------------------------------
 
