@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.1.2.1 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -43,7 +39,7 @@ TARGET=saxon
 .IF "$(SYSTEM_SAXON)" == "YES"
 all:
         @echo "An already available installation of saxon should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -60,7 +56,7 @@ OUT2CLASS= saxon-build$/9.0.0.7$/bj$/saxon9.jar
 
 .ELSE			# $(SOLAR_JAVA)!= ""
 nojava:
-    @echo "Not building $(PRJNAME) because Java is disabled"
+	@echo "Not building $(PRJNAME) because Java is disabled"
 .ENDIF			# $(SOLAR_JAVA)!= ""
 # --- Targets ------------------------------------------------------
 
