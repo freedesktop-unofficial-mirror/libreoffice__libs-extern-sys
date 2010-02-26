@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.1.2.2 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -41,11 +37,11 @@ EXTERNAL_WARNINGS_NOT_ERRORS := TRUE
 
 .IF  "$(ENABLE_CAIRO)" == ""
 all:
-    @echo "Nothing to do (Cairo not enabled)."
+	@echo "Nothing to do (Cairo not enabled)."
 
 .ELIF "$(BUILD_PIXMAN)" == ""
 all:
-    @echo "Not building pixman."
+	@echo "Not building pixman."
 
 .ENDIF
 
@@ -140,7 +136,7 @@ BUILD_DIR=$(CONFIGURE_DIR)
 # -------- All platforms --------------------------------------------
 
 OUT2INC=pixman$/pixman-version.h  \
-    pixman$/pixman.h
+	pixman$/pixman.h
 
 .IF "$(OS)"=="MACOSX"
 OUT2LIB+=pixman$/.libs$/libpixman-1.a
