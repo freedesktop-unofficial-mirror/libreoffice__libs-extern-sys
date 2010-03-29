@@ -44,8 +44,10 @@ TARGET=nss
 all:
     @echo "NSS will not be built. ENABLE_NSS_MODULE is '$(ENABLE_NSS_MODULE)'"
 .ENDIF	
-
-TARFILE_NAME=nss_3_12_5
+#The original tarball obtained from  
+#ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_3_12_6_RTM/src/
+#was "repacked" so that it does not contain the nss-3.12.6 as root dir.
+TARFILE_NAME=nss-3.12.6-with-nspr-4.8.4
 TARFILE_ROOTDIR=mozilla
 PATCH_FILES=nss.patch
     # Note: dtoa.patch fixes https://bugzilla.mozilla.org/show_bug.cgi?id=516396. It can be removed as soon as

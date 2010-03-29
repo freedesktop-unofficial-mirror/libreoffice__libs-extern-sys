@@ -1,6 +1,6 @@
---- misc/mozilla/nsprpub/config/rules.mk	Sat May  2 01:08:01 2009
-+++ misc/build/mozilla/nsprpub/config/rules.mk	Wed Nov 25 08:06:47 2009
-@@ -350,7 +350,12 @@
+--- misc/mozilla/nsprpub/config/rules.mk	Wed Dec  9 22:24:37 2009
++++ misc/build/mozilla/nsprpub/config/rules.mk	Mon Mar 29 10:40:37 2010
+@@ -345,7 +345,12 @@
  ifdef NS_USE_GCC
  	$(RC) $(RCFLAGS) $(filter-out -U%,$(DEFINES)) $(INCLUDES:-I%=--include-dir %) -o $@ $<
  else
@@ -14,9 +14,9 @@
  endif # GCC
  	@echo $(RES) finished
  endif
---- misc/mozilla/nsprpub/configure	Mon Nov 23 11:44:15 2009
-+++ misc/build/mozilla/nsprpub/configure	Wed Nov 25 08:06:47 2009
-@@ -3899,7 +3899,7 @@
+--- misc/mozilla/nsprpub/configure	Mon Feb  8 19:41:35 2010
++++ misc/build/mozilla/nsprpub/configure	Mon Mar 29 10:40:37 2010
+@@ -3900,7 +3900,7 @@
      PR_MD_CSRCS=linux.c
      MKSHLIB='$(CC) $(DSO_LDOPTS) -o $@'
      DSO_CFLAGS=-fPIC
@@ -25,8 +25,8 @@
      _OPTIMIZE_FLAGS=-O2
      _DEBUG_FLAGS="-g -fno-inline"  # most people on linux use gcc/gdb, and that
                                     # combo is not yet good at debugging inlined
---- misc/mozilla/security/coreconf/Darwin.mk	Thu Jul 30 23:36:02 2009
-+++ misc/build/mozilla/security/coreconf/Darwin.mk	Wed Nov 25 08:06:47 2009
+--- misc/mozilla/security/coreconf/Darwin.mk	Thu Feb  4 19:59:10 2010
++++ misc/build/mozilla/security/coreconf/Darwin.mk	Mon Mar 29 10:40:37 2010
 @@ -39,8 +39,12 @@
  
  DEFAULT_COMPILER = cc
@@ -42,8 +42,8 @@
  RANLIB		= ranlib
  
  ifndef CPU_ARCH
---- misc/mozilla/security/coreconf/Linux.mk	Mon Nov 23 11:06:29 2009
-+++ misc/build/mozilla/security/coreconf/Linux.mk	Wed Nov 25 08:11:35 2009
+--- misc/mozilla/security/coreconf/Linux.mk	Fri Jan 15 23:19:00 2010
++++ misc/build/mozilla/security/coreconf/Linux.mk	Mon Mar 29 10:40:37 2010
 @@ -46,8 +46,11 @@
  	IMPL_STRATEGY = _PTH
  endif
@@ -58,7 +58,7 @@
  RANLIB			= ranlib
  
  DEFAULT_COMPILER = gcc
-@@ -149,7 +152,7 @@
+@@ -147,7 +150,7 @@
  # incorrectly reports undefined references in the libraries we link with, so
  # we don't use -z defs there.
  ZDEFS_FLAG		= -Wl,-z,defs
@@ -67,7 +67,7 @@
  LDFLAGS			+= $(ARCHFLAG)
  
  # INCLUDES += -I/usr/include -Y/usr/include/linux
-@@ -160,8 +163,13 @@
+@@ -158,8 +161,13 @@
  #
  CPU_TAG = _$(CPU_ARCH)
  
@@ -82,7 +82,7 @@
  # The -rpath '$$ORIGIN' linker option instructs this library to search for its
  # dependencies in the same directory where it resides.
 --- misc/mozilla/security/coreconf/SunOS5.mk	Thu Jun 11 02:55:32 2009
-+++ misc/build/mozilla/security/coreconf/SunOS5.mk	Wed Nov 25 08:06:47 2009
++++ misc/build/mozilla/security/coreconf/SunOS5.mk	Mon Mar 29 10:40:37 2010
 @@ -89,8 +89,12 @@
  	    # OPTIMIZER += -mno-omit-leaf-frame-pointer -fno-omit-frame-pointer
  	endif
@@ -99,7 +99,7 @@
  	OS_CFLAGS += $(NOMD_OS_CFLAGS) $(ARCHFLAG)
  	ifndef BUILD_OPT
 --- misc/mozilla/security/coreconf/arch.mk	Fri Jun  5 04:14:49 2009
-+++ misc/build/mozilla/security/coreconf/arch.mk	Wed Nov 25 08:06:47 2009
++++ misc/build/mozilla/security/coreconf/arch.mk	Mon Mar 29 10:40:37 2010
 @@ -324,7 +324,12 @@
  # IMPL_STRATEGY may be defined too.
  #
@@ -114,8 +114,8 @@
  
  ifeq (,$(filter-out WIN%,$(OS_TARGET)))
  ifndef BUILD_OPT
---- misc/mozilla/security/coreconf/rules.mk	Tue Aug 11 05:23:39 2009
-+++ misc/build/mozilla/security/coreconf/rules.mk	Wed Nov 25 08:06:47 2009
+--- misc/mozilla/security/coreconf/rules.mk	Tue Dec  8 02:33:36 2009
++++ misc/build/mozilla/security/coreconf/rules.mk	Mon Mar 29 10:40:37 2010
 @@ -355,7 +355,12 @@
  ifdef NS_USE_GCC
  	$(RC) $(filter-out -U%,$(DEFINES)) $(INCLUDES:-I%=--include-dir %) -o $@ $<
@@ -130,9 +130,9 @@
  endif
  	@echo $(RES) finished
  endif
---- misc/mozilla/security/nss/cmd/platlibs.mk	Thu Jun 18 01:01:48 2009
-+++ misc/build/mozilla/security/nss/cmd/platlibs.mk	Wed Nov 25 08:06:47 2009
-@@ -41,12 +41,13 @@
+--- misc/mozilla/security/nss/cmd/platlibs.mk	Thu Feb  4 19:59:10 2010
++++ misc/build/mozilla/security/nss/cmd/platlibs.mk	Mon Mar 29 10:40:37 2010
+@@ -41,27 +41,28 @@
  ifeq ($(OS_ARCH), SunOS) 
  ifeq ($(BUILD_SUN_PKG), 1)
  ifeq ($(USE_64), 1)
@@ -149,7 +149,6 @@
  endif
  endif
  
-@@ -53,15 +54,15 @@
  ifeq ($(OS_ARCH), Linux)
  ifeq ($(BUILD_SUN_PKG), 1)
  ifeq ($(USE_64), 1)
