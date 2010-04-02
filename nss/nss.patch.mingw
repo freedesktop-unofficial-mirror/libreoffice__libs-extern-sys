@@ -13,7 +13,7 @@
 @@ -113,9 +113,9 @@
  # other platforms do not.
  #
- ifeq (,$(filter-out WIN95 WINCE OS2,$(OS_TARGET)))
+ ifeq (,$(filter-out WIN95 WINCE WINMO OS2,$(OS_TARGET)))
 -LIBRARY		= $(OBJDIR)/$(LIBRARY_NAME)$(LIBRARY_VERSION)_s.$(LIB_SUFFIX)
 +LIBRARY		= $(OBJDIR)/$(LIB_PREFIX)$(LIBRARY_NAME)$(LIBRARY_VERSION)_s.$(LIB_SUFFIX)
  SHARED_LIBRARY	= $(OBJDIR)/$(LIBRARY_NAME)$(LIBRARY_VERSION).$(DLL_SUFFIX)
@@ -32,7 +32,7 @@
  MKSHLIB='$(LD) $(DSO_LDOPTS) -o $@'
  PR_MD_ASFILES=
  PR_MD_CSRCS=
-@@ -3998,6 +3999,7 @@
+@@ -4000,6 +4001,7 @@
          OBJ_SUFFIX=obj
          LIB_SUFFIX=lib
          DLL_SUFFIX=dll
@@ -40,7 +40,7 @@
  
          # Determine compiler version
          CC_VERSION=`"${CC}" -v 2>&1 | grep Version | sed -e 's|.* Version ||' -e 's| .*||'`
-@@ -6291,6 +6293,7 @@
+@@ -6262,6 +6264,7 @@
  s%@LIB_SUFFIX@%$LIB_SUFFIX%g
  s%@DLL_SUFFIX@%$DLL_SUFFIX%g
  s%@ASM_SUFFIX@%$ASM_SUFFIX%g
