@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.8 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -37,8 +33,8 @@ TARGET=zlib
 .IF "$(GUI)" == "UNX"
 .IF "$(SYSTEM_ZLIB)" == "YES"
 all:
-    @echo "An already available installation of zlib should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of zlib should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 .ENDIF
 
@@ -59,10 +55,10 @@ BUILD_DIR=$(CONFIGURE_DIR)
 BUILD_ACTION=dmake $(MFLAGS) $(CALLMACROS)
 
 OUT2INC= \
-    zlib.h \
-    zconf.h \
-    contrib$/minizip$/unzip.h \
-    contrib$/minizip$/ioapi.h
+	zlib.h \
+	zconf.h \
+	contrib$/minizip$/unzip.h \
+	contrib$/minizip$/ioapi.h
 
 PATCHED_HEADERS=$(INCCOM)$/patched$/zlib.h
 
