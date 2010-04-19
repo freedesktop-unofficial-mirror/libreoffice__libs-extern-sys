@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.1.2.4 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -41,11 +37,11 @@ EXTERNAL_WARNINGS_NOT_ERRORS := TRUE
 
 .IF  "$(ENABLE_CAIRO)" == ""
 all:
-    @echo "Nothing to do (Cairo not enabled)."
+	@echo "Nothing to do (Cairo not enabled)."
 
 .ELIF "$(SYSTEM_CAIRO)" == "YES"
 all:
-    @echo "Nothing to do, using system cairo."
+	@echo "Nothing to do, using system cairo."
 
 .ENDIF
 
@@ -155,8 +151,8 @@ BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
 
 OUT2INC+=src$/cairo-xlib.h \
-     src$/cairo-xlib-xrender.h \
-     src$/cairo-ft.h
+	 src$/cairo-xlib-xrender.h \
+	 src$/cairo-ft.h
 
 .ENDIF
 
@@ -178,11 +174,11 @@ CONFIGURE_FLAGS+=CFLAGS="-I$(SRC_ROOT)$/$(PRJNAME)$/$(INPATH)$/inc $(cairo_CFLAG
 .ENDIF
 
 OUT2INC+=cairo-version.h \
-     src$/cairo-deprecated.h \
-     src$/cairo-features.h  \
-     src$/cairo-pdf.h	\
-     src$/cairo-ps.h	\
-     src$/cairo.h
+	 src$/cairo-deprecated.h \
+	 src$/cairo-features.h  \
+	 src$/cairo-pdf.h	\
+	 src$/cairo-ps.h	\
+	 src$/cairo.h
 
 .IF "$(OS)"=="MACOSX"
 OUT2LIB+=src$/.libs$/libcairo*.dylib
