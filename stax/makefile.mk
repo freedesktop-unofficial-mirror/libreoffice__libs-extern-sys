@@ -43,7 +43,7 @@ all:
 .ENDIF			# "$(JAVANUMVER:s/.//)" >= "000100060000" 
 .IF "$(SYSTEM_SAXON)" == "YES"
 all:
-    @echo "An already available installation of saxon should exist on your system."
+	@echo "An already available installation of saxon should exist on your system."
 	@echo "Therefore the files provided here does not need to be built in addition."
 .ENDIF
 
@@ -64,6 +64,7 @@ TARFILE_ROOTDIR=src
 BUILD_ACTION=$(JAVAC) javax$/xml$/stream$/*.java && jar -cf jsr173_1.0_api.jar javax$/xml$/stream$/*.class javax$/xml$/stream$/events$/*.class javax$/xml$/stream$/util$/*.class
 
 OUT2CLASS=jsr173_1.0_api.jar
+.ENDIF			#  "$(BUILD_STAX)" != "YES"
 
 .ELSE			# $(SOLAR_JAVA)!= ""
 nojava:
@@ -77,4 +78,3 @@ nojava:
 .INCLUDE : tg_ext.mk
 .ENDIF
 
-.ENDIF			#  "$(BUILD_STAX)" != "YES"
