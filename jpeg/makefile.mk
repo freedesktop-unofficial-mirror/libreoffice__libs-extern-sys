@@ -36,8 +36,8 @@ TARGET=jpeg
 
 .IF "$(SYSTEM_JPEG)" == "YES"
 all:
-    @echo "An already available installation of libjpeg should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of libjpeg should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------

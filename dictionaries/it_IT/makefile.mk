@@ -57,7 +57,8 @@ COMPONENT_FILES= \
     $(EXTENSIONDIR)$/it_IT.dic \
     $(EXTENSIONDIR)$/README_hyph_it_IT.txt \
     $(EXTENSIONDIR)$/README_th_it_IT.txt \
-    $(EXTENSIONDIR)$/th_it_IT_v2.dat
+    $(EXTENSIONDIR)$/th_it_IT_v2.dat \
+    $(EXTENSIONDIR)$/th_it_IT_v2.idx 
 
 COMPONENT_CONFIGDEST=.
 COMPONENT_XCU= \

@@ -36,8 +36,8 @@ TARGET=so_libxslt
 
 .IF "$(SYSTEM_LIBXSLT)" == "YES"
 all:
-    @echo "An already available installation of libxslt should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of libxslt should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -68,7 +68,7 @@ xslt_CC+=-shared-libgcc
 .ENDIF
 xslt_LIBS=
 .IF "$(MINGW_SHARED_GXXLIB)"=="YES"
-xslt_LIBS+=-lstdc++_s
+xslt_LIBS+=$(MINGW_SHARED_LIBSTDCPP)
 .ENDIF
 CONFIGURE_DIR=
 CONFIGURE_ACTION=.$/configure
@@ -92,7 +92,7 @@ BUILD_DIR=$(CONFIGURE_DIR)
 .ELSE
 
 .IF "$(OS)$(COM)"=="LINUXGCC" || "$(OS)$(COM)"=="FREEBSDGCC"
-LDFLAGS:=-Wl,-rpath,'$$$$ORIGIN:$$$$ORIGIN/../ure-link/lib' -Wl,-noinhibit-exec -Wl,-z,noexecstack
+LDFLAGS:=-Wl,-rpath,'$$$$ORIGIN:$$$$ORIGIN/../ure-link/lib' -Wl,-noinhibit-exec
 .ENDIF                  # "$(OS)$(COM)"=="LINUXGCC"
 .IF "$(OS)$(COM)"=="SOLARISC52"
 LDFLAGS:=-Wl,-R'$$$$ORIGIN:$$$$ORIGIN/../ure-link/lib'

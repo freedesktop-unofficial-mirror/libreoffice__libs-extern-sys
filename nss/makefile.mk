@@ -38,13 +38,17 @@ TARGET=nss
 
 .IF "$(ENABLE_NSS_MODULE)"!="YES"
 all:
-    @echo "NSS will not be built. ENABLE_NSS_MODULE is '$(ENABLE_NSS_MODULE)'"
+	@echo "NSS will not be built. ENABLE_NSS_MODULE is '$(ENABLE_NSS_MODULE)'"
 .ENDIF	
 
 TARFILE_NAME=nss-3.12.8-with-nspr-4.8.6
 TARFILE_MD5=71474203939fafbe271e1263e61d083e
 TARFILE_ROOTDIR=nss-3.12.8
 PATCH_FILES=nss.patch nss.aix.patch
+
+.IF "$(OS)"=="MACOSX"
+PATCH_FILES+=nss_macosx.patch
+.ENDIF # "$(OS)"=="MACOSX"
 
 .IF "$(OS)"=="MACOSX"
 PATCH_FILES+=nss_macosx.patch
@@ -113,7 +117,7 @@ nss_CXX+=-shared-libgcc
 
 nss_LIBS=
 .IF "$(MINGW_SHARED_GXXLIB)"=="YES"
-nss_LIBS+=-lstdc++_s
+nss_LIBS+=$(MINGW_SHARED_LIBSTDCPP)
 .ENDIF
 
 

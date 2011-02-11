@@ -55,6 +55,8 @@ COMPONENT_FILES= \
     $(EXTENSIONDIR)$/pl_PL.dic \
     $(EXTENSIONDIR)$/plhyph.tex \
     $(EXTENSIONDIR)$/README_pl.txt \
+    $(EXTENSIONDIR)$/th_pl_PL_v2.dat \
+    $(EXTENSIONDIR)$/th_pl_PL_v2.idx \
     $(EXTENSIONDIR)$/th_pl_PL_v2.dat
 
 COMPONENT_CONFIGDEST=.

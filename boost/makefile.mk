@@ -42,8 +42,8 @@ TARGET=ooo_boost
 # to workaround opt bug when compiling with -xO3
 .IF "$(SYSTEM_BOOST)" == "YES" && ("$(OS)"!="SOLARIS" || "$(COM)"=="GCC")
 all:
-    @echo "An already available installation of boost should exist on your system."        
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of boost should exist on your system."        
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ELSE			# "$(SYSTEM_BOOST)" == "YES" && ("$(OS)"!="SOLARIS" || "$(COM)"=="GCC")
 
 # --- Files --------------------------------------------------------

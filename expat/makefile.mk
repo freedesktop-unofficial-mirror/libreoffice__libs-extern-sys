@@ -37,7 +37,7 @@ TARGET=so_expat
 .IF "$(SYSTEM_EXPAT)" == "YES"
 all:
         @echo "An already available installation of expat should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------

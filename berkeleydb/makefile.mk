@@ -36,8 +36,8 @@ TARGET=so_berkeleydb
 
 .IF "$(SYSTEM_DB)" == "YES"
 all:
-    @echo "An already available installation of db should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of db should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -78,7 +78,7 @@ CXXFLAGS:=-fno-strict-aliasing $(EXTRA_CFLAGS)
 
 .IF "$(GUI)"=="UNX"
 .IF "$(OS)$(COM)"=="LINUXGCC"
-LDFLAGS:=-Wl,-rpath,'$$$$ORIGIN' -Wl,-z,noexecstack
+LDFLAGS:=-Wl,-rpath,'$$$$ORIGIN'
 .EXPORT: LDFLAGS
 #The current dir when linking is unxlngi6.pro/misc/build/db-4.2.52.NC/out
 # the map file is in  unxlngi6.pro/misc/build/db-4.2.52.NC
@@ -97,7 +97,7 @@ LDFLAGS:=$(ARCH_FLAGS) -R\''$$$$ORIGIN'\'
 CONFIGURE_DIR=out
 #relative to CONFIGURE_DIR
 CONFIGURE_ACTION= \
-    ..$/dist$/configure
+	..$/dist$/configure
 CONFIGURE_FLAGS=--disable-cxx --enable-dynamic --enable-shared --enable-compat185
 .IF "$(OS)"=="MACOSX"
 CONFIGURE_FLAGS+=CPPFLAGS="$(EXTRA_CDEFS)"
@@ -109,11 +109,11 @@ CXXFLAGS+:=$(ARCH_FLAGS)
 
 BUILD_DIR=$(CONFIGURE_DIR)
 BUILD_DIR_OUT=$(CONFIGURE_DIR)
-BUILD_ACTION=make
+BUILD_ACTION=$(GNUMAKE) -j$(EXTMAXPROCESS)
 
 OUT2LIB=$(BUILD_DIR)$/.libs$/libdb*$(DLLPOST)
 OUT2INC= \
-    $(BUILD_DIR)$/db.h
+	$(BUILD_DIR)$/db.h
 
 .ENDIF			# "$(GUI)"=="UNX"
 
@@ -137,7 +137,7 @@ db_LDFLAGS+=-L$(COMPATH)/lib -L$(MINGW_CLIB_DIR)
 db_LIBS=
 .IF "$(MINGW_SHARED_GXXLIB)"=="YES"
 CFLAGS+=-D_GLIBCXX_DLL
-db_LIBS+=-lstdc++_s
+db_LIBS+=$(MINGW_SHARED_LIBSTDCPP)
 .ENDIF
 db_LIBXSO_LIBS=$(LIBSTLPORT) $(db_LIBS)
 .IF "$(MINGW_SHARED_GCCLIB)"=="YES"
@@ -154,7 +154,7 @@ OUT2LIB=$(BUILD_DIR)$/.libs$/libdb47.dll.a
 OUT2BIN=$(BUILD_DIR)$/.libs$/libdb47.dll
 
 OUT2INC= \
-    $(BUILD_DIR)$/db.h
+	$(BUILD_DIR)$/db.h
 .IF "$(GUI)$(COM)"=="WNTGCC"
 .EXPORT : PWD
 .ENDIF
@@ -171,7 +171,7 @@ BUILD_DIR_OUT=build_windows
 #	$(BUILD_DIR_OUT)$/Release$/libdb42.lib
 #OUT2BIN=$(BUILD_DIR_OUT)$/Release$/libdb42.dll
 OUT2INC= \
-    $(BUILD_DIR_OUT)$/db.h
+	$(BUILD_DIR_OUT)$/db.h
 .ENDIF
 .ENDIF			# "$(GUI)"=="WNT"
 

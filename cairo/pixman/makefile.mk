@@ -37,11 +37,11 @@ EXTERNAL_WARNINGS_NOT_ERRORS := TRUE
 
 .IF  "$(ENABLE_CAIRO)" == ""
 all:
-    @echo "Nothing to do (Cairo not enabled)."
+	@echo "Nothing to do (Cairo not enabled)."
 
 .ELIF "$(BUILD_PIXMAN)" == ""
 all:
-    @echo "Not building pixman."
+	@echo "Not building pixman."
 
 .ENDIF
 
@@ -92,7 +92,7 @@ BUILD_DIR=$(CONFIGURE_DIR)
 .ELSE
 # ----------- Unix ---------------------------------------------------------
 .IF "$(OS)$(COM)"=="LINUXGCC" || "$(OS)$(COM)"=="FREEBSDGCC"
-LDFLAGS:=-Wl,-rpath,'$$$$ORIGIN:$$$$ORIGIN/../ure-link/lib' -Wl,-z,noexecstack
+LDFLAGS:=-Wl,-rpath,'$$$$ORIGIN:$$$$ORIGIN/../ure-link/lib' -Wl,-noinhibit-exec  -Wl,-z,noexecstack
 .ENDIF                  # "$(OS)$(COM)"=="LINUXGCC"
 
 .IF "$(OS)$(COM)"=="SOLARISC52"
@@ -132,7 +132,7 @@ BUILD_DIR=$(CONFIGURE_DIR)
 # -------- All platforms --------------------------------------------
 
 OUT2INC=pixman$/pixman-version.h  \
-    pixman$/pixman.h
+	pixman$/pixman.h
 
 .IF "$(OS)"=="MACOSX"
 OUT2LIB+=pixman$/.libs$/libpixman-1.a

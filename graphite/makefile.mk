@@ -163,14 +163,14 @@ OUT2BIN=
 
 
 OUTDIR2INC= \
-    engine$/include$/graphite
+	engine$/include$/graphite
 
 .IF "$(OS)"=="WNT"
 OUT2INC=wrappers$/win32$/WinFont.h
 .ENDIF
 .ELSE
 dddd:
-    @echo Nothing to do
+	@echo Nothing to do
 .ENDIF
 # --- Targets ------------------------------------------------------
 

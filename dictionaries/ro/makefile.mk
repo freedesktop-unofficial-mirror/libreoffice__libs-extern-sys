@@ -56,7 +56,8 @@ COMPONENT_FILES= \
     $(EXTENSIONDIR)$/README_RO.txt \
     $(EXTENSIONDIR)$/ro_RO.aff \
     $(EXTENSIONDIR)$/ro_RO.dic \
-    $(EXTENSIONDIR)$/th_ro_RO_v2.dat
+    $(EXTENSIONDIR)$/th_ro_RO_v2.dat \
+    $(EXTENSIONDIR)$/th_ro_RO_v2.idx
 
 COMPONENT_CONFIGDEST=.
 COMPONENT_XCU= \

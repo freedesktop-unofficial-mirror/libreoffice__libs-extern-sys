@@ -38,12 +38,12 @@ TARGET=so_neon
 
 .IF "$(SYSTEM_NEON)" == "YES"
 @all:
-    @echo "Using system neon...."
+	@echo "Using system neon...."
 .ENDIF
 
 .IF "$(DISABLE_NEON)" == "TRUE"
 @all:
-    @echo "neon disabled...."
+	@echo "neon disabled...."
 .ENDIF
 
 NEON_NAME=neon-0.29.3

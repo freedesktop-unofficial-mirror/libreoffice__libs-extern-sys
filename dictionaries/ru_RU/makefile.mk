@@ -75,5 +75,11 @@ EXTENSION_PACKDEPS=$(COMPONENT_FILES) $(COMPONENT_UNZIP_FILES)
 # global targets for extension packing
 .INCLUDE : extension_post.mk
 
+.IF "$(COMPONENT_UNZIP_FILES)"!=""
+$(COMPONENT_UNZIP_FILES) .SILENT .UPDATEALL : "$(COMPONENT_ZIP)"
+	$(COMMAND_ECHO)-$(MKDIRHIER) $(EXTENSIONDIR)
+	cd $(EXTENSIONDIR) && unzip -o $< $(COMPONENT_UNZIP_FILES:f:t" ")
+.ENDIF			# "$(COMPONENT_UNZIP_FILES)"!=""
+
 $(EXTENSIONDIR)$/th_ru_RU_v2.idx : "$(EXTENSIONDIR)$/th_ru_RU_v2.dat"
-        $(PERL) $(PRJ)$/util$/th_gen_idx.pl -o $(EXTENSIONDIR)$/th_ru_RU_v2.idx <$(EXTENSIONDIR)$/th_ru_RU_v2.dat
+        $(PERL) $(SOLARBINDIR)$/th_gen_idx.pl -o $(EXTENSIONDIR)$/th_ru_RU_v2.idx <$(EXTENSIONDIR)$/th_ru_RU_v2.dat

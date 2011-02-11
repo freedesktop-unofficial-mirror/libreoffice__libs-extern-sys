@@ -37,11 +37,11 @@ EXTERNAL_WARNINGS_NOT_ERRORS := TRUE
 
 .IF  "$(ENABLE_CAIRO)" == ""
 all:
-    @echo "Nothing to do (Cairo not enabled)."
+	@echo "Nothing to do (Cairo not enabled)."
 
 .ELIF "$(SYSTEM_CAIRO)" == "YES"
 all:
-    @echo "Nothing to do, using system cairo."
+	@echo "Nothing to do, using system cairo."
 
 .ENDIF
 
@@ -78,7 +78,7 @@ cairo_CC=$(CC) -mthreads
 cairo_CC+=-shared-libgcc
 .ENDIF
 .IF "$(MINGW_SHARED_GXXLIB)"=="YES"
-cairo_LIBS+=-lstdc++_s
+cairo_LIBS+=$(MINGW_SHARED_LIBSTDCPP)
 .ENDIF
 
 CONFIGURE_DIR=
@@ -120,7 +120,7 @@ OUT2INC+=src$/cairo-quartz.h
 .ELSE
 # ----------- Unix ---------------------------------------------------------
 .IF "$(OS)$(COM)"=="LINUXGCC" || "$(OS)$(COM)"=="FREEBSDGCC"
-cairo_LDFLAGS+=-Wl,-rpath,'$$$$ORIGIN:$$$$ORIGIN/../ure-link/lib' -Wl,-z,noexecstack
+cairo_LDFLAGS+=-Wl,-rpath,'$$$$ORIGIN:$$$$ORIGIN/../ure-link/lib' -Wl,-noinhibit-exec  -Wl,-z,noexecstack
 .ELIF "$(OS)$(COM)"=="SOLARISC52"
 cairo_LDFLAGS+=-Wl,-R'$$$$ORIGIN:$$$$ORIGIN/../ure-link/lib'
 .ENDIF  # "$(OS)$(COM)"=="LINUXGCC" || "$(OS)$(COM)"=="FREEBSDGCC"
@@ -151,8 +151,8 @@ BUILD_FLAGS+= -j$(EXTMAXPROCESS)
 BUILD_DIR=$(CONFIGURE_DIR)
 
 OUT2INC+=src$/cairo-xlib.h \
-     src$/cairo-xlib-xrender.h \
-     src$/cairo-ft.h
+	 src$/cairo-xlib-xrender.h \
+	 src$/cairo-ft.h
 
 .ENDIF
 
@@ -179,11 +179,11 @@ CONFIGURE_FLAGS+=CFLAGS="-I$(SRC_ROOT)$/$(PRJNAME)$/$(INPATH)$/inc $(cairo_CFLAG
 .ENDIF
 
 OUT2INC+=cairo-version.h \
-     src$/cairo-deprecated.h \
-     src$/cairo-features.h  \
-     src$/cairo-pdf.h	\
-     src$/cairo-ps.h	\
-     src$/cairo.h
+	 src$/cairo-deprecated.h \
+	 src$/cairo-features.h  \
+	 src$/cairo-pdf.h	\
+	 src$/cairo-ps.h	\
+	 src$/cairo.h
 
 .IF "$(OS)"=="MACOSX"
 OUT2LIB+=src$/.libs$/libcairo*.dylib

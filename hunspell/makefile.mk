@@ -68,7 +68,7 @@ CONFIGURE_FLAGS+= CFLAGS="$(EXTRA_CFLAGS)" CXXFLAGS="$(EXTRA_CFLAGS)"
 CONFIGURE_FLAGS+=CPPFLAGS="$(EXTRA_CDEFS)"
 .ENDIF
 
-BUILD_ACTION=make && make check
+BUILD_ACTION=$(GNUMAKE) -j$(EXTMAXPROCESS)
 
 OUT2LIB=$(BUILD_DIR)$/src$/hunspell$/.libs$/libhunspell-1.2.a
 
@@ -94,7 +94,7 @@ BUILD_ACTION=cd src/hunspell && dmake
 .ENDIF # "$(GUI)"=="OS2"
 
 OUT2INC= \
-    $(BUILD_DIR)$/src$/hunspell$/*.hxx
+	$(BUILD_DIR)$/src$/hunspell$/*.hxx
 
 # --- Targets ------------------------------------------------------
 

@@ -61,7 +61,6 @@ COMPONENT_FILES= \
     $(EXTENSIONDIR)$/help/da/org.openoffice.da.hunspell.dictionaries/page1.xhp \
     $(EXTENSIONDIR)$/help/da/org.openoffice.da.hunspell.dictionaries/Trold.png
 
-
 COMPONENT_CONFIGDEST=.
 COMPONENT_XCU= \
     $(EXTENSIONDIR)$/dictionaries.xcu

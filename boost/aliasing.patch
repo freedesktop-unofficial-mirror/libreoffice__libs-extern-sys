@@ -8,7 +8,7 @@
  //  Use, modification and distribution is subject to the Boost Software License, Version 1.0.
  //  (See accompanying file LICENSE_1_0.txt or copy at
  //  http://www.boost.org/LICENSE_1_0.txt)
-@@ -44,6 +45,13 @@
+@@ -41,6 +42,13 @@
  #   pragma warning( disable : 4127 ) // "conditional expression is constant"
  #endif       
  
@@ -39,5 +39,5 @@
 -            reinterpret_cast<functor_type*>(&out_buffer.data)->~Functor();
 +            static_cast<functor_type*>(static_cast<void*>(&out_buffer.data))->~Functor();
            } else if (op == check_functor_type_tag) {
-             const detail::sp_typeinfo& check_type 
+             const BOOST_FUNCTION_STD_NS::type_info& check_type 
                = *out_buffer.type.type;

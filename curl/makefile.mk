@@ -35,8 +35,8 @@ TARGET=so_curl
 
 .IF "$(SYSTEM_CURL)" == "YES"
 all:
-    @echo "An already available installation of curl should exist on your system."
-    @echo "Therefore the version provided here does not need to be built in addition."
+	@echo "An already available installation of curl should exist on your system."
+	@echo "Therefore the version provided here does not need to be built in addition."
 .ENDIF
 
 # --- Files --------------------------------------------------------
@@ -66,10 +66,6 @@ PATCH_FILES=\
 curl_CFLAGS+=-I$(SYSBASE)$/usr$/include
 curl_LDFLAGS+=-L$(SYSBASE)$/usr$/lib
 .ENDIF			# "$(SYSBASE)"!=""
-
-.IF "$(OS)$(COM)$(CPU)"=="LINUXGCCI"
-curl_LDFLAGS+=-Wl,-z,noexecstack
-.ENDIF
 
 .IF "$(OS)$(CPU)"=="SOLARISU"
 curl_CFLAGS+:=$(ARCH_FLAGS)
@@ -101,7 +97,7 @@ curl_CC+=-shared-libgcc
 .ENDIF
 curl_LIBS=-lws2_32 -lwinmm
 .IF "$(MINGW_SHARED_GXXLIB)"=="YES"
-curl_LIBS+=-lstdc++_s
+curl_LIBS+=$(MINGW_SHARED_LIBSTDCPP)
 .ENDIF
 CONFIGURE_DIR=.$/
 #relative to CONFIGURE_DIR
@@ -158,15 +154,15 @@ OUT2LIB=$(BUILD_DIR)$/libcurl.lib
 .ENDIF			# "$(GUI)"=="OS2"
 
 OUT2INC= \
-    include$/curl$/easy.h  			\
-    include$/curl$/multi.h  		\
-    include$/curl$/curl.h  			\
-    include$/curl$/curlver.h  		\
-    include$/curl$/types.h  		\
-    include$/curl$/stdcheaders.h  	\
-    include$/curl$/mprintf.h	    \
-    include$/curl$/curlbuild.h		\
-    include$/curl$/curlrules.h
+	include$/curl$/easy.h  			\
+	include$/curl$/multi.h  		\
+	include$/curl$/curl.h  			\
+	include$/curl$/curlver.h  		\
+	include$/curl$/types.h  		\
+	include$/curl$/stdcheaders.h  	\
+	include$/curl$/mprintf.h	    \
+	include$/curl$/curlbuild.h		\
+	include$/curl$/curlrules.h
 
 # --- Targets ------------------------------------------------------
 
