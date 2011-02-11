@@ -53,9 +53,9 @@ TARFILE_MD5=ba1015b59c112d44d7797b62fe7bee51
 PATCH_FILES=neon.patch
 
 .IF "$(GUI)"=="WNT"
-	PATCH_FILES+=neon_exports_win.patch
+    PATCH_FILES+=neon_exports_win.patch
 .ELSE
-	PATCH_FILES+=neon_exports_unix.patch
+    PATCH_FILES+=neon_exports_unix.patch
 .ENDIF
 
 ADDITIONAL_FILES=src$/makefile.mk src$/config.h

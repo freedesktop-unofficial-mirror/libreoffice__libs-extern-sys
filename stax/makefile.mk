@@ -39,18 +39,18 @@ USE_JAVAVER=TRUE
 .IF "$(SOLAR_JAVA)" != ""
 .IF "$(JAVANUMVER:s/.//)" >= "000100060000" || "$(JDK)"=="gcj"
 all:
-	@echo "Your java version already contains StAX"
+    @echo "Your java version already contains StAX"
 .ENDIF			# "$(JAVANUMVER:s/.//)" >= "000100060000" 
 .IF "$(SYSTEM_SAXON)" == "YES"
 all:
-	@echo "An already available installation of saxon should exist on your system."
-	@echo "Therefore the files provided here does not need to be built in addition."
+    @echo "An already available installation of saxon should exist on your system."
+    @echo "Therefore the files provided here does not need to be built in addition."
 .ENDIF
 
 .IF "$(BUILD_STAX)" != "YES"
 
 $(OUT)$/class$/jsr173_1.0_api.jar : $(PRJ)$/download$/jsr173_1.0_api.jar
-	+$(COPY) $< $@
+    +$(COPY) $< $@
 
 .ELSE 			#  "$(BUILD_STAX)" != "YES"
 
@@ -66,7 +66,7 @@ OUT2CLASS=jsr173_1.0_api.jar
 
 .ELSE			# $(SOLAR_JAVA)!= ""
 nojava:
-	@echo "Not building $(PRJNAME) because Java is disabled"
+    @echo "Not building $(PRJNAME) because Java is disabled"
 .ENDIF			# $(SOLAR_JAVA)!= ""
 # --- Targets ------------------------------------------------------
 

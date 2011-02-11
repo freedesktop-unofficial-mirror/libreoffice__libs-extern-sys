@@ -39,7 +39,7 @@ TARGET=moz_unzip
 .IF "$(PREBUILD_MOZAB)" == "" || "$(SYSTEM_MOZILLA)" == "YES" || "$(WITH_MOZILLA)" == "NO"
 
 dummy:
-	@echo "No need to unpack the prebuilt mozab packages"
+    @echo "No need to unpack the prebuilt mozab packages"
 
 .ELSE # unpack mozab zips
 .INCLUDE :  target.mk

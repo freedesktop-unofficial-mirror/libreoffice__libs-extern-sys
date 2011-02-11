@@ -53,18 +53,18 @@ FREEBL_LIB=freebl3
 
 
 NSS_MODULE_RUNTIME_LIST:= \
-	$(FREEBL_LIB) \
-	nspr4 \
-	nss3 \
-	nssckbi \
-	nssdbm3 \
-	nssutil3 \
-	plc4 \
-	plds4 \
-	smime3 \
-	softokn3 \
-	sqlite/sqlite3 \
-	ssl3
+    $(FREEBL_LIB) \
+    nspr4 \
+    nss3 \
+    nssckbi \
+    nssdbm3 \
+    nssutil3 \
+    plc4 \
+    plds4 \
+    smime3 \
+    softokn3 \
+    sqlite/sqlite3 \
+    ssl3
 
 BIN_RUNTIMELIST= \
 	xpcom \
@@ -303,9 +303,9 @@ $(MISC)$/build$/so_moz_runtime_files: 	$(OUT)$/bin$/mozruntime.zip
 	echo >& $(NULLDEV)
 .IF "$(ENABLE_NSS_MODULE)" == "YES"
 # We add the libraries from the separate nss module
-	$(foreach,file,$(NSS_MODULE_RUNTIME_LIST) $(COPY) $(SOLARLIBDIR)$/$(file:d:d)/$(DLLPRE)$(file:f)$(DLLPOST) \
-	$(RUNTIME_DIR)$/$(DLLPRE)$(file:f)$(DLLPOST) &&) \
-	echo >& $(NULLDEV)
+    $(foreach,file,$(NSS_MODULE_RUNTIME_LIST) $(COPY) $(SOLARLIBDIR)$/$(file:d:d)/$(DLLPRE)$(file:f)$(DLLPOST) \
+    $(RUNTIME_DIR)$/$(DLLPRE)$(file:f)$(DLLPOST) &&) \
+    echo >& $(NULLDEV)
 .ENDIF
 .ELSE # .IF "$(GUI)" == "UNX"
 .IF "$(ENABLE_NSS_MODULE)" == "YES"
@@ -342,9 +342,9 @@ $(MISC)$/build$/so_moz_runtime_files: 	$(OUT)$/bin$/mozruntime.zip
 	echo >& $(NULLDEV)
 
 .IF "$(GUI)"=="UNX"
-.IF "$(OS)"!="MACOSX"
-	cd $(RUNTIME_DIR) && strip *$(DLLPOST)
-	cd $(RUNTIME_DIR)$/components && strip *$(DLLPOST)
+.IF "$(OS)"!="MACOSX" && "$(OS)"!="AIX"
+    cd $(RUNTIME_DIR) && strip *$(DLLPOST)
+    cd $(RUNTIME_DIR)$/components && strip *$(DLLPOST)
 .ENDIF
 .ENDIF
 .IF "$(OS)"=="MACOSX"
@@ -399,10 +399,10 @@ $(MISC)$/build$/so_moz_include_files: $(INCCOM)$/nsBuildID.h
 .ENDIF
 	$(TOUCH) $@
 .IF "$(ENABLE_NSS_MODULE)"=="YES"
-	+$(foreach,dir,$(NSS_INCLUDE_LIST) $(RENAME:s/+//) $(INCLUDE_DIR)$/$(dir) $(INCLUDE_DIR)$/$(dir)_remove_me &&) echo >& $(NULLDEV)
-	$(foreach,dir,$(NSS_INCLUDE_LIST) rm -rf $(INCLUDE_DIR)$/$(dir)_remove_me &&) echo >& $(NULLDEV)
-	-$(MKDIR)	$(OUT)$/inc.nss
-	cd $(OUT)$/inc.nss && $(foreach,dir,$(NSS_INCLUDE_LIST) $(GNUCOPY) -pRL $(SOLARINCDIR)$/mozilla/$(dir) . &&) echo >& $(NULLDEV)
+    +$(foreach,dir,$(NSS_INCLUDE_LIST) $(RENAME:s/+//) $(INCLUDE_DIR)$/$(dir) $(INCLUDE_DIR)$/$(dir)_remove_me &&) echo >& $(NULLDEV)
+    $(foreach,dir,$(NSS_INCLUDE_LIST) rm -rf $(INCLUDE_DIR)$/$(dir)_remove_me &&) echo >& $(NULLDEV)
+    -$(MKDIR)	$(OUT)$/inc.nss
+    cd $(OUT)$/inc.nss && $(foreach,dir,$(NSS_INCLUDE_LIST) $(GNUCOPY) -pRL $(SOLARINCDIR)$/mozilla/$(dir) . &&) echo >& $(NULLDEV)
 .ENDIF
 
 # On UNX the rules for so_moz_runtime_files copy files into the same directory
@@ -452,8 +452,8 @@ $(MISC)$/CREATETARBALL:	extract_mozab_files
 	cd $(LB) && strip *$(DLLPOST)
 .ENDIF
 .ENDIF
-	cd $(LB) && zip -r ..$/zipped$/$(MOZTARGET)lib.zip *
-	cd $(INCCOM) && zip -r ..$/zipped$/$(MOZTARGET)inc.zip *
+    cd $(LB) && zip -r ..$/zipped$/$(MOZTARGET)lib.zip *
+    cd $(INCCOM) && zip -r ..$/zipped$/$(MOZTARGET)inc.zip *
 .IF "$(ENABLE_NSS_MODULE)"=="YES"
-	cd $(OUT)$/inc.nss && zip -r ..$/zipped$/$(MOZTARGET)inc.zip *
+    cd $(OUT)$/inc.nss && zip -r ..$/zipped$/$(MOZTARGET)inc.zip *
 .ENDIF

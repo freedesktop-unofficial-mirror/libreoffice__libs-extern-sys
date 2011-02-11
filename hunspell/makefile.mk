@@ -43,7 +43,9 @@ ADDITIONAL_FILES+=config.h
 PATCH_FILES=\
     hunspell-wntconfig.patch \
     hunspell-solaris.patch \
-    hunspell-stacksmash.patch
+    hunspell-stacksmash.patch \
+    hunspell-valgrind.patch \
+    hunspell-1.2.9-crashfix.patch
 
 .IF "$(GUI)"=="UNX"
 
@@ -53,6 +55,10 @@ CONFIGURE_FLAGS= --disable-shared --with-pic
 .IF "$(COMNAME)"=="sunpro5"
 CONFIGURE_FLAGS+= CFLAGS=-xc99=none
 .ENDIF                  # "$(COMNAME)"=="sunpro5"
+
+.IF "$(OS)"=="AIX"
+CONFIGURE_FLAGS+= CFLAGS=-D_LINUX_SOURCE_COMPAT
+.ENDIF
 
 .IF "$(SYSBASE)"!=""
 .IF "$(EXTRA_CFLAGS)"!=""

@@ -22,7 +22,7 @@
  // Define BOOST_FUNCTION_STD_NS to the namespace that contains type_info.
  #ifdef BOOST_NO_STD_TYPEINFO
  // Embedded VC++ does not have type_info in namespace std
-@@ -303,15 +311,15 @@
+@@ -314,15 +322,15 @@
          {
            if (op == clone_functor_tag || op == move_functor_tag) {
              const functor_type* in_functor = 

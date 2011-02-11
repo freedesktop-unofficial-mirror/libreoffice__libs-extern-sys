@@ -47,12 +47,18 @@ all:
 .IF "$(ENABLE_GRAPHITE)"=="TRUE"
 TARFILE_NAME=silgraphite-2.3.1
 TARFILE_MD5=d35724900f6a4105550293686688bbb3
-PATCH_FILES=graphite-2.3.1.patch
+#graphite-updatewerror.patch -Werror passed to CFLAGS configure for
+#--enable-debug, but not in configure.ac, so update configure to
+#match
+PATCH_FILES=\
+    graphite-2.3.1.patch \
+    graphite-removeobsolete.patch \
+    graphite-updatewerror.patch
 
 # convert line-endings to avoid problems when patching
 CONVERTFILES=\
-	engine/makefile.vc8 \
-	engine/test/RegressionTest/RtTextSrc.h
+    engine/makefile.vc8 \
+    engine/test/RegressionTest/RtTextSrc.h
 
 #.IF "$(OS)"=="WNT" && "$(COM)"!="GCC"
 #CONFIGURE_DIR=win32
@@ -71,9 +77,9 @@ VCNUM=8
 # make use of stlport headerfiles
 EXT_USE_STLPORT=TRUE
 BUILD_ACTION=nmake VERBOSE=1
-.IF "$(debug)"=="true"
+.IF "$(debug)"!=""
 BUILD_FLAGS= "CFG=DEBUG"
-CFLAGSWITHPATH= $(CFLAGS:s!-Fd.!-Fd../../../../../!)
+CFLAGSWITHPATH= $(CFLAGS:s!-Fd./!-Fd../../../../../!)
 .ELSE
 # Speed Optimization is really needed for Graphite
 CFLAGSWITHPATH= $(CFLAGS) /O2
@@ -90,7 +96,7 @@ BUILD_FLAGS+= "CFLAGS4MSC=$(CFLAGS4MSC)" /F makefile.vc$(VCNUM) lib_dll
 .IF "$(COM)"=="GCC"
 
 # Does linux want --disable-shared?
-.IF "$(debug)"=="true"
+.IF "$(debug)"!=""
 GR_CONFIGURE_FLAGS= --enable-debug=yes --disable-final --enable-static --disable-shared
 .ELSE
 GR_CONFIGURE_FLAGS= --enable-final=yes --enable-static --disable-shared
@@ -123,7 +129,7 @@ BUILD_DIR=$(CONFIGURE_DIR)
 
 .IF "$(OS)"=="WNT" && "$(COM)"!="GCC"
 #OUT2LIB=win32$/bin.msvc$/*.lib
-.IF "$(debug)"=="true"
+.IF "$(debug)"!=""
 OUT2LIB=engine$/debug$/*.lib
 .ELSE
 OUT2LIB=engine$/release$/*.lib
@@ -141,7 +147,7 @@ OUT2LIB+=src$/.libs$/libgraphite.*.dylib
 .ELSE
 .IF "$(OS)"=="WNT" && "$(COM)"!="GCC"
 #OUT2LIB+=engine$/src$/.libs$/libgraphite*.dll
-.IF "$(debug)"=="true"
+.IF "$(debug)"!=""
 OUT2BIN= \
 #    engine$/debug$/*.dll \
     engine$/debug$/*.pdb

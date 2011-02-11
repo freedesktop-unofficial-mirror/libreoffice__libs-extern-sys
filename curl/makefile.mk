@@ -43,6 +43,7 @@ all:
 
 TARFILE_NAME=curl-7.19.7
 TARFILE_MD5=ecb2e37e45c9933e2a963cabe03670ab
+<<<<<<< HEAD
 PATCH_FILES=curl-7.19.7.patch
 
 .IF "$(GUI)"=="WNT"
@@ -50,6 +51,17 @@ PATCH_FILES=curl-7.19.7.patch
 	.IF "$(COM)"=="GCC"
 		PATCH_FILES+=curl-7.19.7_mingw.patch
 	.ENDIF
+=======
+PATCH_FILES=\
+    curl-7.19.7.patch \
+    curl-aix.patch
+
+.IF "$(GUI)"=="WNT"
+    PATCH_FILES+=curl-7.19.7_win.patch
+    .IF "$(COM)"=="GCC"
+        PATCH_FILES+=curl-7.19.7_mingw.patch
+    .ENDIF
+>>>>>>> LO-BASE-INTEGRATION-DEV300_m98
 .ENDIF
 
 
@@ -68,6 +80,10 @@ curl_LDFLAGS+=-L$(SYSBASE)$/usr$/lib
 .IF "$(OS)$(CPU)"=="SOLARISU"
 curl_CFLAGS+:=$(ARCH_FLAGS)
 curl_LDFLAGS+:=$(ARCH_FLAGS)
+.ENDIF
+
+.IF "$(OS)"=="AIX"
+curl_LDFLAGS+:=$(LINKFLAGS) $(LINKFLAGSRUNPATH_OOO)
 .ENDIF
 
 CONFIGURE_DIR=.$/
@@ -112,10 +128,17 @@ EXCFLAGS="/EHsc /YX"
 .ENDIF
 
 BUILD_DIR=.$/lib
-.IF "$(debug)"==""
-BUILD_ACTION=nmake -f Makefile.vc9 cfg=release-dll EXCFLAGS=$(EXCFLAGS)
+
+.IF "$(CPU)" == "I"
+MACHINE=X86
 .ELSE
-BUILD_ACTION=nmake -f Makefile.vc9 cfg=debug-dll EXCFLAGS=$(EXCFLAGS)
+MACHINE=X64
+.ENDIF
+
+.IF "$(debug)"==""
+BUILD_ACTION=nmake -f Makefile.vc9 cfg=release-dll EXCFLAGS=$(EXCFLAGS) MACHINE=$(MACHINE)
+.ELSE
+BUILD_ACTION=nmake -f Makefile.vc9 cfg=debug-dll EXCFLAGS=$(EXCFLAGS) MACHINE=$(MACHINE)
 .ENDIF
 
 OUT2BIN=$(BUILD_DIR)$/libcurl.dll

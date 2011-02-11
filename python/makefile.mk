@@ -50,7 +50,9 @@ TARFILE_MD5=e81c2f0953aa60f8062c05a4673f2be0
 PATCH_FILES=\
 	Python-$(PYVERSION).patch \
 	Python-parallel-make.patch \
-	Python-ssl.patch
+    Python-ssl.patch \
+    Python-aix.patch \
+    Python-2.6.1-urllib.patch
 
 CONFIGURE_DIR=
 
@@ -72,9 +74,16 @@ CC+:=$(ARCH_FLAGS)
 python_LDFLAGS+=$(ARCH_FLAGS)
 .ENDIF
 
+.IF "$(OS)"=="AIX"
+python_CFLAGS=-g0
+.ENDIF
+
 CONFIGURE_ACTION=$(AUGMENT_LIBRARY_PATH) ./configure --prefix=$(MYCWD)/python-inst --enable-shared CFLAGS="$(python_CFLAGS)" LDFLAGS="$(python_LDFLAGS)"
 .IF "$(OS)$(CPU)" == "SOLARISI"
 CONFIGURE_ACTION += --disable-ipv6
+.ENDIF
+.IF "$(OS)"=="AIX"
+CONFIGURE_ACTION += --disable-ipv6 --with-threads
 .ENDIF
 BUILD_ACTION=$(ENV_BUILD) $(GNUMAKE) -j$(EXTMAXPROCESS) && $(GNUMAKE) install && chmod -R ug+w $(MYCWD)/python-inst && chmod g+w Include
 .ELSE
@@ -108,16 +117,33 @@ BUILD_ACTION=$(ENV_BUILD) make && make install
 #.ENDIF #"$(WINDOWS_VISTA_PSDK)"!=""
 #.ENDIF
 
+.IF "$(CCNUMVER)" >= "001600000000"
+PATCH_FILES+=Python-$(PYVERSION)-vc10.patch
+BUILD_DIR=PC/VS10.0
+.ELIF "$(CCNUMVER)" >= "001500000000"
 BUILD_DIR=PCbuild
+.ELIF "$(CCNUMVER)" >= "001400000000"
+BUILD_DIR=PC/VS8.0
+.ELIF "$(CCNUMVER)" >= "001310000000"
+BUILD_DIR=PC/VS7.1
+.ELSE
+BUILD_DIR=PC/VC6
+.ENDIF
+
+.IF "$(CPU)" == "I"
+ARCH=Win32
+.ELSE
+ARCH=x64
+.ENDIF
 
 # Build python executable and then runs a minimal script. Running the minimal script
 # ensures that certain *.pyc files are generated which would otherwise be created on
 # solver during registration in insetoo_native
-.IF "$(SYSBASE)" != ""
-BUILD_ACTION=$(COMPATH)$/vcpackages$/vcbuild.exe -useenv pcbuild.sln "Release|Win32"
+.IF "$(CCNUMVER)" >= "001600000000"
+BUILD_ACTION=MSBuild.exe pcbuild.sln /t:Build /p:Configuration=Release /ToolsVersion:4.0
 .ELSE
-BUILD_ACTION=$(COMPATH)$/vcpackages$/vcbuild.exe pcbuild.sln "Release|Win32"
-.ENDIF # "$(SYSBASE)" != ""
+BUILD_ACTION=$(COMPATH)$/vcpackages$/vcbuild.exe pcbuild.sln "Release|$(ARCH)"
+.ENDIF
 .ENDIF
 .ENDIF
 

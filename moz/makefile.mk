@@ -52,6 +52,11 @@ LD_LIBRARY_PATH!:=$(LD_LIBRARY_PATH)$(PATH_SEPERATOR)$(PKGCONFIG_ROOT)$/lib
 DISABLE_MOZ_EXECUTABLE=TRUE
 .EXPORT : DISABLE_MOZ_EXECUTABLE
 
+.IF "$(OS)"=="AIX"
+LDFLAGS+:=$(LINKFLAGS) $(LINKFLAGSRUNPATH_OOO)
+.EXPORT : LDFLAGS
+.ENDIF
+
 .IF "$(SYSBASE)"!="" && "$(OS)" == "LINUX"
 ## hmm... rather gcc specific switches...
 CFLAGS:=-isystem $(SYSBASE)/usr/include -B$(SYSBASE)/usr/lib
@@ -87,7 +92,9 @@ PATCH_FILES = \
     patches/respect_disable_pango.patch \
     patches/arm_build_fix.patch \
     patches/link_fontconfig.patch \
-    patches/brokenmakefile.patch
+    patches/brokenmakefile.patch \
+    patches/aix_build_fix.patch \
+    patches/libpr0n_build_fix.patch
 
 # This file is needed for the W32 build when BUILD_MOZAB is set
 # (currently only vc8/vs2005 is supported when BUILD_MOZAB is set)
@@ -107,35 +114,35 @@ MOZILLA_CONFIGURE_FLAGS += $(SYSBASE_X11)
 .ENDIF
 
 MOZILLA_CONFIGURE_FLAGS +=  --disable-tests \
-				--enable-application=suite \
-				--enable-ldap \
-				--enable-crypto \
-				--enable-optimize \
-				--enable-strip \
-				--disable-profilelocking \
-				--disable-activex \
-				--disable-activex-scripting \
-				--disable-gnomevfs \
-				--disable-debug \
-				--disable-xprint \
-				--disable-postscript \
-				--without-system-zlib \
-				--disable-installer \
-				--disable-accessibility \
-				--disable-xpfe-components \
-				--disable-mathml \
-				--disable-oji \
-				--disable-profilesharing \
-				--disable-boehm \
-				--disable-jsloader \
-				--disable-canvas \
-				--disable-freetype2 \
-				--disable-gnomeui \
-				--disable-image-encoders \
-				--disable-plugins \
-				--disable-printing \
-				--disable-pango \
-				--enable-extensions="pref"
+                --enable-application=suite \
+                --enable-ldap \
+                --enable-crypto \
+                --enable-optimize \
+                --enable-strip \
+                --disable-profilelocking \
+                --disable-activex \
+                --disable-activex-scripting \
+                --disable-gnomevfs \
+                --disable-debug \
+                --disable-xprint \
+                --disable-postscript \
+                --without-system-zlib \
+                --disable-installer \
+                --disable-accessibility \
+                --disable-xpfe-components \
+                --disable-mathml \
+                --disable-oji \
+                --disable-profilesharing \
+                --disable-boehm \
+                --disable-jsloader \
+                --disable-canvas \
+                --disable-freetype2 \
+                --disable-gnomeui \
+                --disable-image-encoders \
+                --disable-plugins \
+                --disable-printing \
+                --disable-pango \
+                --enable-extensions="pref"
 
 #.IF "$(GUI)"!="WNT"
 #MOZILLA_CONFIGURE_FLAGS += --enable-system-cairo
@@ -185,6 +192,14 @@ CXXFLAGS+=-m64
 CXXFLAGS:=-mminimal-toc
 .EXPORT : CXXFLAGS
 .ENDIF
+.ENDIF
+
+.IF "$(COM)" == "GCC"
+CXXFLAGS+=-fpermissive
+.IF "$(OS)$(CPUNAME)" == "LINUXPOWERPC64"
+CXXFLAGS+=-mminimal-toc
+.ENDIF
+.EXPORT : CXXFLAGS
 .ENDIF
 
 .IF "$(OS)"=="SOLARIS" && "$(CPUNAME)"=="SPARC" && "$(CPU)"=="U"

@@ -41,10 +41,14 @@ all:
 	@echo "NSS will not be built. ENABLE_NSS_MODULE is '$(ENABLE_NSS_MODULE)'"
 .ENDIF	
 
-TARFILE_NAME=nss-3.12.6-with-nspr-4.8.4
-TARFILE_MD5=b92261a5679276c400555004937af965
-TARFILE_ROOTDIR=nss-3.12.6
-PATCH_FILES=nss.patch
+TARFILE_NAME=nss-3.12.8-with-nspr-4.8.6
+TARFILE_MD5=71474203939fafbe271e1263e61d083e
+TARFILE_ROOTDIR=nss-3.12.8
+PATCH_FILES=nss.patch nss.aix.patch
+
+.IF "$(OS)"=="MACOSX"
+PATCH_FILES+=nss_macosx.patch
+.ENDIF # "$(OS)"=="MACOSX"
 
 .IF "$(OS)"=="MACOSX"
 PATCH_FILES+=nss_macosx.patch
@@ -121,21 +125,23 @@ BUILD_DIR=mozilla$/security$/nss
 BUILD_ACTION=NS_USE_GCC=1 CC="$(nss_CC)" CXX="$(nss_CXX)" OS_LIBS="$(nss_LIBS)" OS_TARGET=WIN95 _WIN32_IE=0x500 PATH="$(PATH)" DEFINES=-D_WIN32_IE=0x500 $(GNUMAKE) nss_build_all
 
 OUT2LIB= \
-	mozilla$/dist$/out$/lib$/libnspr4.a \
-	mozilla$/dist$/out$/lib$/libnss3.a \
-	mozilla$/dist$/out$/lib$/libnssdbm3.a \
-	mozilla$/dist$/out$/lib$/libnssutil3.a \
-	mozilla$/dist$/out$/lib$/libplc4.a \
-	mozilla$/dist$/out$/lib$/libplds4.a \
-	mozilla$/dist$/out$/lib$/libsmime3.a \
-	mozilla$/dist$/out$/lib$/libsoftokn3.a \
-	mozilla$/dist$/out$/lib$/libsqlite3.a \
-	mozilla$/dist$/out$/lib$/libssl3.a
+    mozilla$/dist$/out$/lib$/libnspr4.a \
+    mozilla$/dist$/out$/lib$/libnss3.a \
+    mozilla$/dist$/out$/lib$/libnssdbm3.a \
+    mozilla$/dist$/out$/lib$/libnssutil3.a \
+    mozilla$/dist$/out$/lib$/libplc4.a \
+    mozilla$/dist$/out$/lib$/libplds4.a \
+    mozilla$/dist$/out$/lib$/libsmime3.a \
+    mozilla$/dist$/out$/lib$/libsoftokn3.a \
+    mozilla$/dist$/out$/lib$/libsqlite3.a \
+    mozilla$/dist$/out$/lib$/libssl3.a
 
 .ELSE			# "$(COM)"=="GCC"
 MOZ_MSVCVERSION= 9
 .EXPORT : MOZ_MSVCVERSION
 moz_build:=$(shell cygpath -p $(MOZILLABUILD))
+PATH!:=$(moz_build)/msys/bin:$(moz_build)/moztools/bin:$(PATH)
+.EXPORT : PATH
 
 #Using WINNT will cause at least that nspr4.dll, plc4.dll, plds4.dll 
 #become libnspr4.dll, libplc4.dll, libplds4.dll
@@ -150,20 +156,20 @@ EXT_USE_STLPORT=TRUE
 #To build nss one has to call "make nss_build_all" in 
 #mozilla/security/nss
 NSS_BUILD_DIR= $(subst,\,/ $(PWD)/$(MISC)/build/$(TARFILE_ROOTDIR)/mozilla/security/nss)
-BUILD_ACTION= PATH="$(moz_build)/msys/bin:$(moz_build)/moztools/bin:$(PATH)" && $(subst,/,$/ $(MOZILLABUILD)/msys/bin/bash) -i \
-	-c "cd $(NSS_BUILD_DIR) && make nss_build_all"
+BUILD_ACTION= $(subst,/,$/ $(MOZILLABUILD)/msys/bin/bash) -i \
+    -c "cd $(NSS_BUILD_DIR) && make nss_build_all"
 
 OUT2LIB= \
- 	mozilla$/dist$/out$/lib$/nspr4.lib \
- 	mozilla$/dist$/out$/lib$/nss3.lib \
- 	mozilla$/dist$/out$/lib$/nssdbm3.lib \
- 	mozilla$/dist$/out$/lib$/nssutil3.lib \
- 	mozilla$/dist$/out$/lib$/plc4.lib \
- 	mozilla$/dist$/out$/lib$/plds4.lib \
- 	mozilla$/dist$/out$/lib$/smime3.lib \
- 	mozilla$/dist$/out$/lib$/softokn3.lib \
- 	mozilla$/dist$/out$/lib$/sqlite3.lib \
- 	mozilla$/dist$/out$/lib$/ssl3.lib
+     mozilla$/dist$/out$/lib$/nspr4.lib \
+     mozilla$/dist$/out$/lib$/nss3.lib \
+     mozilla$/dist$/out$/lib$/nssdbm3.lib \
+     mozilla$/dist$/out$/lib$/nssutil3.lib \
+     mozilla$/dist$/out$/lib$/plc4.lib \
+     mozilla$/dist$/out$/lib$/plds4.lib \
+     mozilla$/dist$/out$/lib$/smime3.lib \
+     mozilla$/dist$/out$/lib$/softokn3.lib \
+     mozilla$/dist$/out$/lib$/sqlite3.lib \
+     mozilla$/dist$/out$/lib$/ssl3.lib
 
 .ENDIF			# "$(COM)"=="GCC"
 

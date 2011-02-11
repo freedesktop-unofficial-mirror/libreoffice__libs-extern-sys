@@ -51,7 +51,8 @@ EXTENSION_ZIPNAME:=dict-ne
 COMPONENT_FILES= \
     $(EXTENSIONDIR)$/ne_NP.aff \
     $(EXTENSIONDIR)$/ne_NP.dic \
-    $(EXTENSIONDIR)$/README_th_ne_NP_v2.txt
+    $(EXTENSIONDIR)$/README_th_ne_NP_v2.txt \
+    $(EXTENSIONDIR)$/th_ne_NP_v2.dat
 
 COMPONENT_CONFIGDEST=.
 COMPONENT_XCU= \
@@ -62,14 +63,13 @@ CUSTOM_LICENSE=README_ne_NP.txt
 # override default license destination
 PACKLICS= $(EXTENSIONDIR)$/$(CUSTOM_LICENSE)
 
-COMPONENT_ZIP:=$(PWD)$/th_ne_NP_v2.zip
 COMPONENT_UNZIP_FILES= \
-    $(EXTENSIONDIR)$/th_ne_NP_v2.dat
+    $(EXTENSIONDIR)$/th_ne_NP_v2.idx
 
 # add own targets to packing dependencies (need to be done before
 # packing the xtension
 # EXTENSION_PACKDEPS=makefile.mk $(CUSTOM_LICENSE)
-EXTENSION_PACKDEPS=$(COMPONENT_UNZIP_FILES) $(EXTENSIONDIR)$/th_ne_NP_v2.idx
+EXTENSION_PACKDEPS=$(COMPONENT_FILES) $(COMPONENT_UNZIP_FILES)
 
 # global settings for extension packing
 .INCLUDE : extension_pre.mk
