@@ -76,9 +76,6 @@ CUSTOM_LICENSE=LICENSES-en.txt
 # override default license destination
 PACKLICS= $(EXTENSIONDIR)$/$(CUSTOM_LICENSE)
 
-COMPONENT_UNZIP_FILES= \
-    $(EXTENSIONDIR)$/th_ca_ES_v3.idx
-
 # add own targets to packing dependencies (need to be done before
 # packing the xtension
 # EXTENSION_PACKDEPS=makefile.mk $(CUSTOM_LICENSE)
@@ -89,7 +86,4 @@ EXTENSION_PACKDEPS=$(COMPONENT_FILES) $(COMPONENT_UNZIP_FILES)
 .INCLUDE : target.mk
 # global targets for extension packing
 .INCLUDE : extension_post.mk
-
-$(EXTENSIONDIR)$/th_ca_ES_v3.idx : "$(EXTENSIONDIR)$/th_ca_ES_v3.dat"
-        $(PERL) $(PRJ)$/util$/th_gen_idx.pl -o $(EXTENSIONDIR)$/th_ca_ES_v3.idx <$(EXTENSIONDIR)$/th_ca_ES_v3.dat
 

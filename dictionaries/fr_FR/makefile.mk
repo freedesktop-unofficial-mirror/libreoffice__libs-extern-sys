@@ -69,9 +69,6 @@ CUSTOM_LICENSE=README_fr.txt
 # override default license destination
 PACKLICS= $(EXTENSIONDIR)$/$(CUSTOM_LICENSE)
 
-COMPONENT_UNZIP_FILES= \
-    $(EXTENSIONDIR)$/thes_fr.idx
-
 # add own targets to packing dependencies (need to be done before
 # packing the xtension
 # EXTENSION_PACKDEPS=makefile.mk $(CUSTOM_LICENSE)
@@ -83,5 +80,3 @@ EXTENSION_PACKDEPS=$(COMPONENT_FILES) $(COMPONENT_UNZIP_FILES)
 # global targets for extension packing
 .INCLUDE : extension_post.mk
 
-$(EXTENSIONDIR)$/thes_fr.idx : "$(EXTENSIONDIR)$/thes_fr.dat"
-        $(PERL) $(PRJ)$/util$/th_gen_idx.pl -o $(EXTENSIONDIR)$/thes_fr.idx <$(EXTENSIONDIR)$/thes_fr.dat

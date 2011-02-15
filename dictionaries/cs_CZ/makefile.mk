@@ -60,9 +60,6 @@ CUSTOM_LICENSE=th_cs_CZ_license.txt
 # override default license destination
 PACKLICS= $(EXTENSIONDIR)$/$(CUSTOM_LICENSE)
 
-COMPONENT_UNZIP_FILES= \
-    $(EXTENSIONDIR)$/th_cs_CZ_v2.idx
-
 # add own targets to packing dependencies (need to be done before
 # packing the xtension
 # EXTENSION_PACKDEPS=makefile.mk $(CUSTOM_LICENSE)
@@ -80,5 +77,3 @@ $(COMPONENT_UNZIP_FILES) .SILENT .UPDATEALL : "$(COMPONENT_ZIP)"
 	cd $(EXTENSIONDIR) && unzip -o $< $(COMPONENT_UNZIP_FILES:f:t" ")
 .ENDIF			# "$(COMPONENT_UNZIP_FILES)"!=""
 
-$(EXTENSIONDIR)$/th_cs_CZ_v2.idx : "$(EXTENSIONDIR)$/th_cs_CZ_v2.dat"
-        $(PERL) $(SOLARBINDIR)$/th_gen_idx.pl -o $(EXTENSIONDIR)$/th_cs_CZ_v2.idx <$(EXTENSIONDIR)$/th_cs_CZ_v2.dat

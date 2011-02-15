@@ -57,7 +57,6 @@ COMPONENT_FILES= \
     $(EXTENSIONDIR)$/README_pl.txt \
     $(EXTENSIONDIR)$/th_pl_PL_v2.dat \
     $(EXTENSIONDIR)$/th_pl_PL_v2.idx \
-    $(EXTENSIONDIR)$/th_pl_PL_v2.dat
 
 COMPONENT_CONFIGDEST=.
 COMPONENT_XCU= \
@@ -82,6 +81,4 @@ EXTENSION_PACKDEPS=$(COMPONENT_FILES) $(COMPONENT_UNZIP_FILES)
 # global targets for extension packing
 .INCLUDE : extension_post.mk
 
-$(EXTENSIONDIR)$/th_pl_PL_v2.idx : "$(EXTENSIONDIR)$/th_pl_PL_v2.dat"
-        $(PERL) $(PRJ)$/util$/th_gen_idx.pl -o $(EXTENSIONDIR)$/th_pl_PL_v2.idx <$(EXTENSIONDIR)$/th_pl_PL_v2.dat
 

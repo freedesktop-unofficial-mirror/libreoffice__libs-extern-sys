@@ -57,7 +57,7 @@ COMPONENT_FILES= \
     $(EXTENSIONDIR)$/ro_RO.aff \
     $(EXTENSIONDIR)$/ro_RO.dic \
     $(EXTENSIONDIR)$/th_ro_RO_v2.dat \
-    $(EXTENSIONDIR)$/th_ro_RO_v2.idx
+
 
 COMPONENT_CONFIGDEST=.
 COMPONENT_XCU= \
@@ -68,8 +68,6 @@ CUSTOM_LICENSE=README_EN.txt
 # override default license destination
 PACKLICS= $(EXTENSIONDIR)$/$(CUSTOM_LICENSE)
 
-COMPONENT_UNZIP_FILES= \
-    $(EXTENSIONDIR)$/th_ro_RO_v2.idx
 
 # add own targets to packing dependencies (need to be done before
 # packing the xtension
@@ -82,6 +80,4 @@ EXTENSION_PACKDEPS=$(COMPONENT_FILES) $(COMPONENT_UNZIP_FILES)
 # global targets for extension packing
 .INCLUDE : extension_post.mk
 
-$(EXTENSIONDIR)$/th_ro_RO_v2.idx : "$(EXTENSIONDIR)$/th_ro_RO_v2.dat"
-        $(PERL) $(PRJ)$/util$/th_gen_idx.pl -o $(EXTENSIONDIR)$/th_ro_RO_v2.idx <$(EXTENSIONDIR)$/th_ro_RO_v2.dat
 
