@@ -50,7 +50,8 @@ PATCH_FILES=\
     Python-parallel-make.patch \
     Python-ssl.patch \
     Python-aix.patch \
-    Python-2.6.1-urllib.patch
+    Python-2.6.1-urllib.patch \
+    Python-2.6.1-py4768.patch
 
 CONFIGURE_DIR=
 
