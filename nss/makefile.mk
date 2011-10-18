@@ -44,7 +44,7 @@ all:
 TARFILE_NAME=nss-3.12.8-with-nspr-4.8.6
 TARFILE_MD5=71474203939fafbe271e1263e61d083e
 TARFILE_ROOTDIR=nss-3.12.8
-PATCH_FILES=nss.patch nss.aix.patch
+PATCH_FILES=nss.patch nss.aix.patch nss-linux3.patch
 
 .IF "$(OS)"=="MACOSX"
 PATCH_FILES+=nss_macosx.patch
