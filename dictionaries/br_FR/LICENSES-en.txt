@@ -1,2 +1,0 @@
-LICENSE :
-"An Drouizig" spelling dictionary : LGPL
